@@ -9,9 +9,7 @@ public class AuthenticationContext : DbContext
 {
     public DbSet<Usuario> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
-
-    private IConfiguration configuration;
-
+    
     public AuthenticationContext()
     {
     }

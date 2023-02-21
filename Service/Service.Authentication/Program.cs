@@ -1,10 +1,8 @@
 using System.Data.Common;
-using System.Text;
-using Domain.Authentication.Configuration;
+using System.Reflection;
 using Infra.Authentication.Context;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Infra.Authentication.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 
@@ -20,6 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWTAuthAuthentication", Version = "v1" });
+    
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+    
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -45,34 +48,21 @@ builder.Services.AddSwaggerGen(c =>
     }); 
 });
 
+//Servicos
+UsuarioDependencyInjection.Register(builder.Services);
+
 //DBConnection
-var connectionString = builder.Configuration.GetConnectionString("App");
-DbConnection dbConnection = new NpgsqlConnection(connectionString);
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+    .AddJsonFile("Config/appsettings.json")
+    .Build(); // Obtem o appsettings da pasta de configuracao
+
+DbConnection dbConnection = new NpgsqlConnection(configuration.GetConnectionString("app"));
 builder.Services.AddDbContext<AuthenticationContext>(opt =>
 {
     opt.UseNpgsql(dbConnection, assembly =>
         assembly.MigrationsAssembly(typeof(AuthenticationContext).Assembly.FullName));
 });
-
-//JWTConfig
-var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x =>
-{
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateAudience = false,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false
-    };                    
-});
-
-//Injeção de Dependencia
-builder.Services.AddTransient<TokenService>();
 
 var app = builder.Build();
 
@@ -80,8 +70,27 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(opt =>
+    {
+        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger V1 develop");
+    });
 }
+
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(opt =>
+    {
+        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Remoto V1");
+    });
+    app.UseHsts();
+}
+
+
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 

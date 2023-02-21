@@ -1,6 +1,8 @@
-﻿namespace Application.Authentication.Interface;
+﻿using Application.Authentication.ViewModels;
 
-public class IUsuarioAppService
+namespace Application.Authentication.Interface;
+
+public interface IUsuarioAppService
 {
-    
+    Task<string> RegisterUser(RegisterViewModel viewmodel);
 }

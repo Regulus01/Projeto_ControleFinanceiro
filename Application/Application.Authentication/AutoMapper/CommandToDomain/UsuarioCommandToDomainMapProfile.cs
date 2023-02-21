@@ -6,16 +6,17 @@ using SecureIdentity.Password;
 
 namespace Application.Authentication.AutoMapper.CommandToDomain;
 
-public class UsuarioMapProfile : Profile
+public class UsuarioCommandMapProfile : Profile
 {
-    public UsuarioMapProfile()
+    public UsuarioCommandMapProfile()
     {
          CreateMap<RegisterUserCommand, Usuario>()
         .ConstructUsing(x => new Usuario(
             x.Name,
             x.Email,
-            x.Email.Replace("@", "-").Replace(".", "-"),
             PasswordHasher.Hash(x.Password, 16, 32, 10000, '.', ""),
+            x.Email.Replace("@", "-").Replace(".", "-"),
             RoleIdentify.ClienteRole));
+        
     }
 }

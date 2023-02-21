@@ -22,16 +22,21 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
 
     public Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
+        if (_repository.EmailCadastrado(request.Email))
+        {
+            return Task.FromResult("O email cadastrado já existe.");
+        }
+        
         var user = _mapper.Map<Usuario>(request);
-
+        
         try
         {
-            _repository.AdicionarPessoaFisica(pessoa);
+            _repository.AdicionarUsuario(user);
             _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
                 cancellationToken);
 
             _repository.Commit();
-            return Task.FromResult("Pessoa fisica Criada.");
+            return Task.FromResult("Usuário criado com sucesso.");
         }
         catch (Exception ex)
         {

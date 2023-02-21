@@ -10,15 +10,17 @@
         <PackageReference Include="AutoMapper" Version="12.0.1" />
         <PackageReference Include="SecureIdentity" Version="1.0.4" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.13" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Application\Application.Authentication\Application.Authentication.csproj" />
       <ProjectReference Include="..\..\Infra\Infra.Authentication\Infra.Authentication.csproj" />
     </ItemGroup>
+    
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <ItemGroup>

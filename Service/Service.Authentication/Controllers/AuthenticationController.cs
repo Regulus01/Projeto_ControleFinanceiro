@@ -1,3 +1,4 @@
+using Application.Authentication.Interface;
 using SecureIdentity.Password;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,40 +15,34 @@ namespace Service.Authentication.Controllers;
 [ApiController]
 public class AuthenticationController : ControllerBase
 {
+    private readonly IUsuarioAppService _appService;
+
+    public AuthenticationController(IUsuarioAppService appService)
+    {
+        _appService = appService;
+    }
+    
+    /// <summary>
+    ///  End point utilizado para criar um usuário no sistema
+    /// </summary>
+    ///  <remarks>
+    ///       O usuário criado no endPoint por padrão é cadastrado com a role de cliente
+    ///  </remarks>
+    /// <param name="viewModel"> Parametro contendo dados necessários para criação</param>
+    /// <response code="200"> Usuário cadastrado </response>
+    /// <response code="401"> Não autorizado </response>
+    /// <response code="500"> Falha na requisição </response>
+    /// <returns>Reponse com dados sobre o cadastro</returns>
     [AllowAnonymous]
     [HttpPost("v1/register")]
-    public async Task<IActionResult> Register([FromBody] RegisterViewModel model,
-        [FromServices] AuthenticationContext context)
+    public Task<IActionResult> Register([FromBody] RegisterViewModel viewModel)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid) 
+            return Task.FromResult<IActionResult>(BadRequest(ModelState));
 
-        var user = new Usuario
-        {
-            Name = model.Name,
-            Email = model.Email,
-            Slug = model.Email.Replace("@", "-").Replace(".", "-"),
-            RoleId = Guid.Parse("fc1eb138-1c84-4fb0-846b-0d8f45d6aac3"),
-            // PasswordHasher.Hash pertence ao pacote SecureIdentity,
-            // e irá criptografar a senha do usuário
-            PasswordHash = PasswordHasher.Hash(model.Password),
-          
-        };
+        var response = _appService.RegisterUser(viewModel);
 
-        try
-        {
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
-
-            return Ok($"{user.Email} {user.PasswordHash}");
-        }
-        catch (DbUpdateException)
-        {
-            return StatusCode(400, "Duplicate Email");
-        }
-        catch
-        {
-            return StatusCode(500, "Internal Error");
-        }
+        return Task.FromResult<IActionResult>(Ok(response));
     }
     
     [AllowAnonymous]
@@ -120,6 +115,6 @@ public class AuthenticationController : ControllerBase
     [HttpGet]
     [Route("cliente")]
     [Authorize(Roles = "cliente")]
-    public string Employee() => "admin";
+    public string Employee() => "cliente";
 
 }
