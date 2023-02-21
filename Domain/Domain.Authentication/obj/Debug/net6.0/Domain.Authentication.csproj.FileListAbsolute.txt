@@ -1,0 +1,12 @@
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\bin\Debug\net6.0\Domain.Authentication.deps.json
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\bin\Debug\net6.0\Domain.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\bin\Debug\net6.0\Domain.Authentication.pdb
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.csproj.AssemblyReference.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.GeneratedMSBuildEditorConfig.editorconfig
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.AssemblyInfoInputs.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.AssemblyInfo.cs
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.csproj.CoreCompileInputs.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\refint\Domain.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\Domain.Authentication.pdb
+G:\My Drive\Projeto Labs I - Controle Financeiro\Domain\Domain.Authentication\obj\Debug\net6.0\ref\Domain.Authentication.dll

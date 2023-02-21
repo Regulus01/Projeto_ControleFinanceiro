@@ -1,0 +1,17 @@
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Infra.Authentication.deps.json
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Infra.Authentication.runtimeconfig.json
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Infra.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Infra.Authentication.pdb
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Domain.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\bin\Debug\net6.0\Domain.Authentication.pdb
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.csproj.AssemblyReference.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.GeneratedMSBuildEditorConfig.editorconfig
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.AssemblyInfoInputs.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.AssemblyInfo.cs
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.csproj.CoreCompileInputs.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.csproj.CopyComplete
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\refint\Infra.Authentication.dll
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.pdb
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\Infra.Authentication.genruntimeconfig.cache
+G:\My Drive\Projeto Labs I - Controle Financeiro\Infra\Infra.Authentication\obj\Debug\net6.0\ref\Infra.Authentication.dll
