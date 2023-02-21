@@ -1,9 +1,12 @@
+using System.Data.Common;
 using System.Text;
 using Domain.Authentication.Configuration;
 using Infra.Authentication.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +45,15 @@ builder.Services.AddSwaggerGen(c =>
     }); 
 });
 
+//DBConnection
+var connectionString = builder.Configuration.GetConnectionString("App");
+DbConnection dbConnection = new NpgsqlConnection(connectionString);
+builder.Services.AddDbContext<AuthenticationContext>(opt =>
+{
+    opt.UseNpgsql(dbConnection, assembly =>
+        assembly.MigrationsAssembly(typeof(AuthenticationContext).Assembly.FullName));
+});
+
 //JWTConfig
 var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
 builder.Services.AddAuthentication(x =>
@@ -62,9 +74,6 @@ builder.Services.AddAuthentication(x =>
 //Injeção de Dependencia
 builder.Services.AddTransient<TokenService>();
 
-//DBContext
-builder.Services.AddDbContext<AuthenticationContext>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +84,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//JWTConfig - Adicionar sempre Authentication antes de Authorization
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -6,7 +6,6 @@ using Application.Authentication.ViewModels;
 using Domain.Authentication.Configuration;
 using Domain.Authentication.Entities;
 using Infra.Authentication.Context;
-using Microsoft.AspNetCore.Identity;
 
 namespace Service.Authentication.Controllers;
 
@@ -83,4 +82,44 @@ public class AuthenticationController : ControllerBase
             return StatusCode(500, "Internal Error");
         }
     }
+    
+    [Authorize(Roles = "admin")]
+    [HttpPatch("v1/changeUserRole")]
+    public async Task<IActionResult> ChangeRole(Guid UserId,
+        Guid NewRoleId,
+        [FromServices] AuthenticationContext context)
+    {
+        var user = await context
+            .Users
+            .FirstOrDefaultAsync(x => x.Id == UserId);
+
+        var role = await context
+            .Roles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == NewRoleId);
+
+        if (user == null || role == null)
+            return StatusCode(401, "Invalid Id");
+
+        user.Role = role;
+
+        await context.SaveChangesAsync();
+        return Ok();
+    }
+    
+    [HttpGet]
+    [Route("anonymous")]
+    [AllowAnonymous]
+    public string Anonymous() => "Anônimo";
+
+    [HttpGet]
+    [Route("authenticated")]
+    [Authorize]
+    public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+
+    [HttpGet]
+    [Route("cliente")]
+    [Authorize(Roles = "cliente")]
+    public string Employee() => "admin";
+
 }

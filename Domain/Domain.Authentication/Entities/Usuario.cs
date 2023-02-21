@@ -9,4 +9,13 @@ public class Usuario
     public string Slug { get; set; }
     public Guid RoleId { get; set; }
     public Role Role { get; set; }
+
+    public Usuario(string name, string email, string passwordHash, string slug, Guid roleId)
+    {
+        Name = name;
+        Email = email;
+        PasswordHash = passwordHash;
+        Slug = slug;
+        RoleId = roleId;
+    }
 }

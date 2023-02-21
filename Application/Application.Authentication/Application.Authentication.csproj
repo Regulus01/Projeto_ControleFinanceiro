@@ -6,4 +6,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="AutoMapper">
+        <HintPath>C:\Users\jsous\.nuget\packages\automapper\12.0.1\lib\netstandard2.1\AutoMapper.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Domain\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\..\Infra\Infra.CrossCutting\Infra.CrossCutting.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SecureIdentity" Version="1.0.4" />
+    </ItemGroup>
+
 </Project>
