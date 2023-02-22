@@ -1,7 +1,6 @@
 ﻿using Domain.Authentication.Entities;
 using Infra.Authentication.Maps;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Infra.Authentication.Context;
 

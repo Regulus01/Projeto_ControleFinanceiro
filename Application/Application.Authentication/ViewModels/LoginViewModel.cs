@@ -4,11 +4,9 @@ namespace Application.Authentication.ViewModels;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage = "Name  é obrigatório")]
-    public string Name { get; set; }
     [Required(ErrorMessage = "Email é obrigatório")]
     [EmailAddress(ErrorMessage = "Email precisa ser vacilo")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
     [Required(ErrorMessage = "Password é obrigatório")]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 }

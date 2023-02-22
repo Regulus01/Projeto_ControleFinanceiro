@@ -15,7 +15,7 @@ public class TokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         //Chave da classe Configuration. O Token Handler espera um Array de Bytes, por isso é necessário converter
         var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-        //
+        
         var claims = user.GetClaims();
         var tokenDescriptor = new SecurityTokenDescriptor
         {

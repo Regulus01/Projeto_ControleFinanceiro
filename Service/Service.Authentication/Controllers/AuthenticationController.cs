@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Application.Authentication.ViewModels;
 using Domain.Authentication.Configuration;
-using Domain.Authentication.Entities;
 using Infra.Authentication.Context;
+using Infra.CrossCutting.User.Athenticated;
 
 namespace Service.Authentication.Controllers;
 
@@ -16,10 +16,12 @@ namespace Service.Authentication.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IUsuarioAppService _appService;
+    private readonly AuthenticatedUser _user;
 
-    public AuthenticationController(IUsuarioAppService appService)
+    public AuthenticationController(IUsuarioAppService appService, AuthenticatedUser user)
     {
         _appService = appService;
+        _user = user;
     }
     
     /// <summary>
@@ -110,7 +112,16 @@ public class AuthenticationController : ControllerBase
     [HttpGet]
     [Route("authenticated")]
     [Authorize]
-    public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+    public string Authenticated()
+    {
+        //operacoes para testes 
+        var x = 1;
+        var y = 3;
+        var idDoUsuarioLogado = _user.GetUserId();
+        var soma = x + y;
+        
+        return String.Format("Autenticado - {0}", User.Identity.Name);
+    }
 
     [HttpGet]
     [Route("cliente")]

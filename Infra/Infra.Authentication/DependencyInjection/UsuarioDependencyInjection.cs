@@ -1,49 +1,53 @@
-﻿using System.Text;
+﻿using System.Data.Common;
 using Application.Authentication.AppService;
 using Application.Authentication.AutoMapper;
 using Application.Authentication.Interface;
 using Domain.Authentication.Commands;
 using Domain.Authentication.Configuration;
+using Infra.Authentication.Context;
 using Infra.Authentication.Interface;
 using Infra.Authentication.Repository;
-using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Infra.CrossCutting.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 
 namespace Infra.Authentication.DependencyInjection;
 
-public class UsuarioDependencyInjection
+public class UsuarioDependencyInjection : BaseDependencyInjection
 {
     public static void Register(IServiceCollection serviceProvider)
     {
         RepositoryDependence(serviceProvider);
     }
-    
+
     private static void RepositoryDependence(IServiceCollection serviceProvider)
     {
-        // Jwt config
-        serviceProvider.AddCors();
-        var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-        serviceProvider.AddAuthentication(x =>
+        BaseRepositoryDependence(serviceProvider);
+        
+        //DBConnection
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("Config/appsettings.json") // Obtem o appsettings da pasta de configuracao
+            .Build(); 
+
+        DbConnection dbConnection = new NpgsqlConnection(configuration.GetConnectionString("app"));
+        //Para adicionar mais contextos é necessário repetir o addDbContext
+        serviceProvider.AddDbContext<AuthenticationContext>(opt =>
         {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(x =>
-        {
-            x.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateAudience = false,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false
-            };                    
+            opt.UseNpgsql(dbConnection, assembly =>
+                assembly.MigrationsAssembly(typeof(AuthenticationContext).Assembly.FullName));
         });
+
+        //Token service
+        serviceProvider.AddTransient<TokenService>();
         
         //Auto mapper
         var mapper = AutoMapperConfig.RegisterMaps().CreateMapper();
         serviceProvider.AddSingleton(mapper);
         serviceProvider.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        
         //Inversao de dependencia
         serviceProvider.AddScoped<IUsuarioRepository, UsuarioRepository>();
         serviceProvider.AddScoped<IUsuarioAppService, UsuarioAppService>();
@@ -55,7 +59,6 @@ public class UsuarioDependencyInjection
             
         });
         
-        //Token service
-        serviceProvider.AddTransient<TokenService>();
+        
     }
 }
