@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.Authentication.ViewModels;
 using Domain.Authentication.Configuration;
 using Infra.Authentication.Context;
-using Infra.CrossCutting.User.Athenticated;
+using Infra.CrossCutting.Interface;
 
 namespace Service.Authentication.Controllers;
 
@@ -16,9 +16,9 @@ namespace Service.Authentication.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IUsuarioAppService _appService;
-    private readonly AuthenticatedUser _user;
+    private readonly IAuthenticatedUser _user;
 
-    public AuthenticationController(IUsuarioAppService appService, AuthenticatedUser user)
+    public AuthenticationController(IUsuarioAppService appService, IAuthenticatedUser user)
     {
         _appService = appService;
         _user = user;
@@ -47,6 +47,17 @@ public class AuthenticationController : ControllerBase
         return Task.FromResult<IActionResult>(Ok(response));
     }
     
+    /// <summary>
+    ///  End point utilizado para fazer login com usuário
+    /// </summary>
+    ///  <remarks>
+    ///       Utilizado para obter o token de autenticação pra ser usado no sistema.
+    ///  </remarks>
+    /// <param name="LoginViewModel"> ViewModel com dados necessário para o login</param>
+    /// <response code="200"> Logado com sucesso </response>
+    /// <response code="401"> Não autorizado </response>
+    /// <response code="500"> Falha na requisição </response>
+    /// <returns>Token de autorização</returns>
     [AllowAnonymous]
     [HttpPost("v1/login")]
     public async Task<IActionResult> Login(
@@ -109,6 +120,10 @@ public class AuthenticationController : ControllerBase
     [AllowAnonymous]
     public string Anonymous() => "Anônimo";
 
+    /// <summary>
+    ///     EndPoint utilizado para testes
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [Route("authenticated")]
     [Authorize]
@@ -119,7 +134,7 @@ public class AuthenticationController : ControllerBase
         var y = 3;
         var idDoUsuarioLogado = _user.GetUserId();
         var soma = x + y;
-        
+        _appService.TesteAppService();
         return String.Format("Autenticado - {0}", User.Identity.Name);
     }
 

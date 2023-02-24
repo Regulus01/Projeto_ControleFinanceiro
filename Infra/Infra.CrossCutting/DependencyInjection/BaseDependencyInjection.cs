@@ -1,6 +1,7 @@
 using System.Text;
 using Domain.Authentication.Configuration;
-using Infra.CrossCutting.User.Athenticated;
+using Infra.CrossCutting.Interface;
+using Infra.CrossCutting.User.Authenticated;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ public class BaseDependencyInjection
     protected static void BaseRepositoryDependence(IServiceCollection serviceProvider)
     {
         serviceProvider.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        serviceProvider.AddScoped<AuthenticatedUser>();
+        serviceProvider.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
 
         // Jwt config
         serviceProvider.AddCors();

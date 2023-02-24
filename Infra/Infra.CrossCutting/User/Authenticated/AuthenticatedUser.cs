@@ -1,9 +1,9 @@
-using System.Security.Claims;
+using Infra.CrossCutting.Interface;
 using Microsoft.AspNetCore.Http;
 
-namespace Infra.CrossCutting.User.Athenticated;
+namespace Infra.CrossCutting.User.Authenticated;
 
-public class AuthenticatedUser
+public class AuthenticatedUser : IAuthenticatedUser
 {
     private readonly IHttpContextAccessor _accessor;
 
@@ -12,6 +12,10 @@ public class AuthenticatedUser
         _accessor = accessor;
     }
     
+    /// <summary>
+    ///     Método para obter o id do usuário que fez a requisição
+    /// </summary>
+    /// <returns>Id do usuário no sistema.</returns>
     public Guid? GetUserId()
     {
         var userId = _accessor.HttpContext?.User.Claims.First().Value;
