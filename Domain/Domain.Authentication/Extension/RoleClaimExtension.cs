@@ -5,7 +5,7 @@ namespace Domain.Authentication.Extension;
 
 public static class RoleClaimExtension
 {
-    public static IEnumerable<Claim> GetClaims(this Usuario user)
+    public static IEnumerable<Claim> GetClaimsAccess(this Usuario user)
     {
         var result = new List<Claim>
         {
@@ -13,6 +13,15 @@ public static class RoleClaimExtension
             new (ClaimTypes.Name, user.Name),
             new (ClaimTypes.Email, user.Email),
             new (ClaimTypes.Role, user.Role.Name)
+        };
+        return result;
+    }
+    
+    public static IEnumerable<Claim> GetClaimsRefresh(this Usuario user)
+    {
+        var result = new List<Claim>
+        {
+            new (ClaimTypes.System, user.Id.ToString()),
         };
         return result;
     }

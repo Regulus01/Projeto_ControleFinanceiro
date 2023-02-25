@@ -12,6 +12,7 @@ public static class AutoMapperConfig
         {
             config.AddProfile<UsuarioCommandMapProfile>();
             config.AddProfile<UsuarioViewModelCommandMapProfile>();
+            config.AddProfile<TokenViewModelCommandMapProfile>();
         });
     }
 }

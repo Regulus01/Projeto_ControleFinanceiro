@@ -51,6 +51,7 @@ public class UsuarioDependencyInjection : BaseDependencyInjection
         //Inversao de dependencia
         serviceProvider.AddScoped<IUsuarioRepository, UsuarioRepository>();
         serviceProvider.AddScoped<IUsuarioAppService, UsuarioAppService>();
+        serviceProvider.AddScoped<ITokenAppService, TokenAppService>();
         
         //Mediatr commands
         serviceProvider.AddMediatR(config =>

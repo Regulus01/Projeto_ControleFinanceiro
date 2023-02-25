@@ -1,4 +1,5 @@
 ﻿using Application.Authentication.ViewModels;
+using Domain.Authentication.Configuration;
 
 namespace Application.Authentication.Interface;
 

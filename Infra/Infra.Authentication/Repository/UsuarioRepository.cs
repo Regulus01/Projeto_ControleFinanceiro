@@ -1,6 +1,7 @@
 ﻿using Domain.Authentication.Entities;
 using Infra.Authentication.Context;
 using Infra.Authentication.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Authentication.Repository;
 
@@ -20,10 +21,20 @@ public class UsuarioRepository : IUsuarioRepository
         return emailExiste != null;
     }
 
+    public Usuario? ObterUsuarioPorId(Guid id)
+    {
+        var user = _context.Users
+                    .Include(x => x.Role)
+                    .FirstOrDefault(x => x.Id == id);
+
+        return user;
+    }
+    
     public void AdicionarUsuario(Usuario usuario)
     {
         _context.Add(usuario);
     }
+    
     public void Commit()
     {
         _context.SaveChanges();
