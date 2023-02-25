@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json.Serialization;
 using Application.Authentication.Interface;
 using SecureIdentity.Password;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +9,7 @@ using Application.Authentication.ViewModels;
 using Domain.Authentication.Configuration;
 using Infra.Authentication.Context;
 using Infra.CrossCutting.Interface;
+using Newtonsoft.Json;
 
 namespace Service.Authentication.Controllers;
 
@@ -83,6 +86,7 @@ public class AuthenticationController : ControllerBase
         try
         {
             var token = tokenService.GenerateToken(user);
+            Console.WriteLine();
             return Ok(token);
         }
         catch
@@ -90,7 +94,45 @@ public class AuthenticationController : ControllerBase
             return StatusCode(500, "Internal Error");
         }
     }
-    
+
+    [HttpPost]
+    [Route("refresh-token")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RefreshToken(TokenModel? tokenModel, [FromServices] TokenService tokenService)
+    {
+        if (tokenModel is null)
+        {
+            return BadRequest("Invalid client request");
+        }
+        
+        var accessToken = tokenModel.AccessToken;
+        var refreshToken = tokenModel.RefreshToken;
+        
+        var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
+        if (principal == null)
+        {
+            return BadRequest("Invalid access token/refresh token");
+        }
+
+        if (tokenModel.RefreshTokenExpiration <= DateTime.Now)
+        {
+            return BadRequest("Invalid access token/refresh token");
+        }
+        
+        var tokenHandler = new JwtSecurityTokenHandler();
+        
+        var userClaims = principal.Claims.ToList();
+        var newAccessToken = tokenHandler.CreateToken(tokenService.GerarToken(8, userClaims));
+        var newAcessTokenExpiresAt = newAccessToken.ValidTo;
+        var newRefreshToken = tokenHandler.CreateToken(tokenService.GerarToken(10, userClaims));
+        var newRefreshTokenExpiresAt = newAccessToken.ValidTo;
+        
+        var newTokenModel = new TokenModel(tokenHandler.WriteToken(newAccessToken), newAcessTokenExpiresAt, 
+            tokenHandler.WriteToken(newRefreshToken), newRefreshTokenExpiresAt);
+
+        return Ok(newTokenModel);
+    }
+
     [Authorize(Roles = "admin")]
     [HttpPatch("v1/changeUserRole")]
     public async Task<IActionResult> ChangeRole(Guid UserId,
