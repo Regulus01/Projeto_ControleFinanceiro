@@ -30,6 +30,7 @@ public class UsuarioAppService : IUsuarioAppService
 
     public Guid? TesteAppService()
     {
+        //App service utilizado para testes
         var x = _user.GetUserId();
         Console.WriteLine(x);
 
