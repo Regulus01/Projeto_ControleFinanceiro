@@ -4,6 +4,8 @@ using Domain.Authentication.Commands.Notification;
 using Domain.Authentication.Entities;
 using Infra.Authentication.Interface;
 using MediatR;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Domain.Authentication.Handle;
 
@@ -20,11 +22,11 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         _mapper = mapper;
     }
 
-    public Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         if (_repository.EmailCadastrado(request.Email))
         {
-            return Task.FromResult("O email cadastrado já existe.");
+            return await Task.FromResult("O email cadastrado já existe.");
         }
         
         var user = _mapper.Map<Usuario>(request);
@@ -32,20 +34,35 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         try
         {
             _repository.AdicionarUsuario(user);
-            _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
+            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
                 cancellationToken);
-
             _repository.Commit();
-            return Task.FromResult("Usuário criado com sucesso.");
+
+            await EnviarEmailDeBoasVidas(user.Email, user.Name);
+            return await Task.FromResult("Usuário criado com sucesso.");
         }
         catch (Exception ex)
         {
-            _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
+            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
                 cancellationToken);
-            _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
+            await _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
                 cancellationToken);
 
-            return Task.FromResult("Ocorreu um erro no momento do cadastro: ");
+            return await Task.FromResult("Ocorreu um erro no momento do cadastro: ");
         }
+    }
+
+    private async Task EnviarEmailDeBoasVidas(string userEmail, string userName)
+    {
+        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+        var client = new SendGridClient(apiKey);
+
+        var from = new EmailAddress("josecssj.games@gmail.com", "Aline Ramos");
+        var to = new EmailAddress(userEmail, userName);
+
+        var userObject = new { username = userName };
+
+        var templateMessage = MailHelper.CreateSingleTemplateEmail(from, to, "d-381280346da44f5794bac24e52acbb5f", userObject);
+        await client.SendEmailAsync(templateMessage);
     }
 }
