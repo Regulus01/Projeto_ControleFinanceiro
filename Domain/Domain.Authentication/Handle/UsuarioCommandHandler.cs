@@ -31,15 +31,12 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         
         var user = _mapper.Map<Usuario>(request);
         
+        _repository.AdicionarUsuario(user);
+        await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
+
         try
         {
-            _repository.AdicionarUsuario(user);
-            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
-                cancellationToken);
             _repository.Commit();
-
-            await EnviarEmailDeBoasVidas(user.Email, user.Name);
-            return await Task.FromResult("Usuário criado com sucesso.");
         }
         catch (Exception ex)
         {
@@ -50,11 +47,20 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
 
             return await Task.FromResult("Ocorreu um erro no momento do cadastro: ");
         }
+
+        await EnviarEmailDeBoasVidas(user.Email, user.Name);
+        return await Task.FromResult("Usuário criado com sucesso.");
+    
     }
 
     private async Task EnviarEmailDeBoasVidas(string userEmail, string userName)
     {
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
+        if (apiKey == null)
+        {
+            return;
+        }
         var client = new SendGridClient(apiKey);
 
         var from = new EmailAddress("josecssj.games@gmail.com", "Aline Ramos");
