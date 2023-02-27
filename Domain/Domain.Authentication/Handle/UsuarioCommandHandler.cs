@@ -26,13 +26,13 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
     {
         if (_repository.EmailCadastrado(request.Email))
         {
-            return await Task.FromResult("O email cadastrado já existe.");
+            return "O email cadastrado já existe.";
         }
         
         var user = _mapper.Map<Usuario>(request);
         
         _repository.AdicionarUsuario(user);
-        await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
+        _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
 
         try
         {
@@ -40,16 +40,16 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         }
         catch (Exception ex)
         {
-            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
+            _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
                 cancellationToken);
-            await _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
+            _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
                 cancellationToken);
 
-            return await Task.FromResult("Ocorreu um erro no momento do cadastro: ");
+            return "Ocorreu um erro no momento do cadastro: ";
         }
 
         await EnviarEmailDeBoasVidas(user.Email, user.Name);
-        return await Task.FromResult("Usuário criado com sucesso.");
+        return "Usuário criado com sucesso.";
     
     }
 

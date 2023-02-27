@@ -32,7 +32,7 @@ public class UsuarioController : ControllerBase
     /// <response code="200"> Usuário cadastrado </response>
     /// <response code="401"> Não autorizado </response>
     /// <response code="500"> Falha na requisição </response>
-    /// <returns>Reponse com dados sobre o cadastro</returns>
+    /// <returns>Response com dados sobre o cadastro</returns>
     [AllowAnonymous]
     [HttpPost("v1/register")]
     public Task<IActionResult> Register([FromBody] RegisterViewModel viewModel)

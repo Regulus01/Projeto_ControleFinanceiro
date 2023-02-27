@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Authentication", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.CrossCutting", "Infra\Infra.CrossCutting\Infra.CrossCutting.csproj", "{C47DC3BD-462D-4597-8394-FDC85A6D236E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{FA1235AF-3B6E-4210-9079-1ACE484DA965}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{FA1235AF-3B6E-4210-9079-1ACE484DA965}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{3250D635-0644-4BBB-BBA4-2B7E10C3B4B5}"
 EndProject
