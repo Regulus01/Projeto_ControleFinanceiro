@@ -75,6 +75,9 @@ namespace Infra.Authentication.Migrations
             migrationBuilder.DropTable(
                 name: "Role",
                 schema: "Pessoa");
+
+            migrationBuilder.DropSchema(
+                name: "Pessoa");
         }
     }
 }

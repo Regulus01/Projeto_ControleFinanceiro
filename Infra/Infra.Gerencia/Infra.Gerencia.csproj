@@ -7,15 +7,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Config" />
+        <Folder Include="Config" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Domain\Domain.Gerencia\Domain.Gerencia.csproj" />
+    </ItemGroup>
+
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <ItemGroup>
-            <SourceConfig Include="../../Config/*.json"/>
+            <SourceConfig Include="../../Config/*.json" />
         </ItemGroup>
 
-        <Copy SourceFiles="@(SourceConfig)" DestinationFolder="./Config" SkipUnchangedFiles="true"/>
+        <Copy SourceFiles="@(SourceConfig)" DestinationFolder="./Config" SkipUnchangedFiles="true" />
     </Target>
-    
+
 </Project>

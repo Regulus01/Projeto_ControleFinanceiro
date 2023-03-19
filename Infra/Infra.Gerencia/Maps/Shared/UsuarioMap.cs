@@ -1,16 +1,16 @@
-﻿using Domain.Authentication.Entities;
-using Domain.Authentication.Shared;
+using Domain.Gerencia.Entities;
+using Domain.Gerencia.Shared.Usuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infra.Authentication.Maps;
+namespace Infra.Gerencia.Maps;
 
 public class UsuarioMap : IEntityTypeConfiguration<Usuario>
 {
     public void Configure(EntityTypeBuilder<Usuario> builder)
     {
         builder.HasKey(x => x.Id);
-        
+
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
 
@@ -44,10 +44,10 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
         builder.HasOne(x => x.Pessoa)
             .WithOne(x => x.Usuario)
             .HasForeignKey<Pessoa>(x => x.Id);
-            
+
         builder.HasIndex(x => x.Slug, "IX_User_Slug")
-                .IsUnique();
-        
+            .IsUnique();
+
         builder.ToTable("Usuario", "Autenticacao");
     }
 }

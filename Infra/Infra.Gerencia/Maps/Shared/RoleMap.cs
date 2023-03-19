@@ -1,8 +1,8 @@
-﻿using Domain.Authentication.Entities;
+using Domain.Gerencia.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infra.Authentication.Maps;
+namespace Infra.Gerencia.Maps.Shared;
 
 public class RoleMap : IEntityTypeConfiguration<Role>
 {

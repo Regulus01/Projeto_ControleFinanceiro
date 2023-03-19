@@ -1,6 +1,6 @@
-﻿using Domain.Authentication.Shared;
+using Domain.Gerencia.Entities;
 
-namespace Domain.Authentication.Entities;
+namespace Domain.Gerencia.Shared.Usuario;
 
 public class Usuario
 {
@@ -14,13 +14,4 @@ public class Usuario
     
     public Guid PessoaId { get; set; }
     public virtual Pessoa Pessoa { get; set; }
-
-    public Usuario(string name, string email, string passwordHash, string slug, Guid roleId)
-    {
-        Name = name;
-        Email = email;
-        PasswordHash = passwordHash;
-        Slug = slug;
-        RoleId = roleId;
-    }
 }

@@ -1,12 +1,13 @@
-using Domain.Gerencia.Enum;
-using Domain.Gerencia.Shared.Usuario;
+using Domain.Authentication.Entities;
+using Domain.Authentication.Shared.Enum;
 
-namespace Domain.Gerencia.Entities;
+namespace Domain.Authentication.Shared;
 
 public class Pessoa
 {
     public Guid Id { get; set; }
     public string Nome { get; set; }
+    public string Email { get; set; }
     public int Telefone { get; set; }
     public string Endereco { get; set; }
     public DateTime DataDeNascimento { get; set; }

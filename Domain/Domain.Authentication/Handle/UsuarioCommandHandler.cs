@@ -32,17 +32,18 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         var user = _mapper.Map<Usuario>(request);
         
         _repository.AdicionarUsuario(user);
-        _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
-
+        
         try
         {
             _repository.Commit();
+            Console.WriteLine("Usuario criado com sucesso " + request.Email);
+            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
         }
         catch (Exception ex)
         {
-            _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
+            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email },
                 cancellationToken);
-            _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
+            await _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
                 cancellationToken);
 
             return "Ocorreu um erro no momento do cadastro: ";
