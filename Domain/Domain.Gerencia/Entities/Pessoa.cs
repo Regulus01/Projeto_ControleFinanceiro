@@ -8,7 +8,8 @@ public class Pessoa
     public Guid Id { get; set; }
     public string Nome { get; set; }
     public int Telefone { get; set; }
-    public string Endereco { get; set; }
+    public Guid EnderecoId { get; set; }
+    public Endereco Endereco { get; set; }
     public DateTime DataDeNascimento { get; set; }
     public Sexo Sexo { get; set; }
     public virtual Usuario Usuario { get; set; }
