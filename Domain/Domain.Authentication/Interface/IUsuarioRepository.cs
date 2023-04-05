@@ -1,6 +1,6 @@
 ﻿using Domain.Authentication.Entities;
 
-namespace Infra.Authentication.Interface;
+namespace Domain.Authentication.Interface;
 
 public interface IUsuarioRepository
 {

@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Domain\Domain.Gerencia\Domain.Gerencia.csproj" />
+        <ProjectReference Include="..\..\Application\Application.Gerencia\Application.Gerencia.csproj" />
+        <ProjectReference Include="..\Infra.CrossCutting\Infra.CrossCutting.csproj" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

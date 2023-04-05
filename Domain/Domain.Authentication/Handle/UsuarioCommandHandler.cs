@@ -2,7 +2,7 @@
 using Domain.Authentication.Commands;
 using Domain.Authentication.Commands.Notification;
 using Domain.Authentication.Entities;
-using Infra.Authentication.Interface;
+using Domain.Authentication.Interface;
 using MediatR;
 using SendGrid;
 using SendGrid.Helpers.Mail;

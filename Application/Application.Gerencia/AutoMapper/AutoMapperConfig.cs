@@ -1,3 +1,4 @@
+using Application.Gerencia.AutoMapper.CommandToDomain;
 using Application.Gerencia.AutoMapper.ViewModelToCommand;
 using AutoMapper;
 
@@ -10,6 +11,7 @@ public class AutoMapperConfig
         return new MapperConfiguration(config =>
         {
             config.AddProfile<PessoaMapProfile>();
+            config.AddProfile<PessoaCommandToDomainMapProfile>();
         });
     }
 }

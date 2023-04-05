@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Domain\Domain.Gerencia\Domain.Gerencia.csproj" />
+      <ProjectReference Include="..\..\Infra\Infra.CrossCutting\Infra.CrossCutting.csproj" />
     </ItemGroup>
 
 </Project>

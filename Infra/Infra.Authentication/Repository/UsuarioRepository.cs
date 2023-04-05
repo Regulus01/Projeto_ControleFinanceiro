@@ -1,6 +1,6 @@
 ﻿using Domain.Authentication.Entities;
+using Domain.Authentication.Interface;
 using Infra.Authentication.Context;
-using Infra.Authentication.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Authentication.Repository;

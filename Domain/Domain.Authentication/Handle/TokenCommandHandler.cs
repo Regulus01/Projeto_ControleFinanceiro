@@ -4,7 +4,7 @@ using System.Text;
 using AutoMapper;
 using Domain.Authentication.Commands.Token;
 using Domain.Authentication.Configuration;
-using Infra.Authentication.Interface;
+using Domain.Authentication.Interface;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 

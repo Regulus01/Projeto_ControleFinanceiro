@@ -18,9 +18,17 @@ public class PessoaController : ControllerBase
         _appService = appService;
     }
     
+    /// <summary>
+    /// EndPoint de uso do backend
+    /// <remarks>
+    ///     EndPoint utilizado para cadastrar a pessoa no Sistema
+    /// </remarks>
+    /// </summary>
+    /// <param name="viewModel"></param>
+    /// <returns></returns>
     [AllowAnonymous]
-    [HttpPost("v1/register")]
-    public Task<IActionResult> Register([FromBody] RegistrarPessoaViewModel viewModel)
+    [HttpPost("v1/RegistrarPessoa")]
+    public Task<IActionResult> RegistrarPessoa([FromBody] RegistrarPessoaViewModel viewModel)
     {
         var response = _appService.RegistrarPessoa(viewModel);
 
