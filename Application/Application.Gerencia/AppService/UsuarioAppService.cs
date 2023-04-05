@@ -5,7 +5,7 @@ namespace Application.Gerencia.AppService;
 
 public class UsuarioAppService : IPessoaAppService
 {
-    public Task<string> RegistrarPessoa(RegistrarPessoaViewModel viewmodel)
+    public Task<string> RegistrarPessoa(RegistrarPessoaViewModel viewModel)
     {
         throw new NotImplementedException();
     }

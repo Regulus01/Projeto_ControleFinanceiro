@@ -35,14 +35,14 @@ public class UsuarioController : ControllerBase
     /// <returns>Response com dados sobre o cadastro</returns>
     [AllowAnonymous]
     [HttpPost("v1/register")]
-    public Task<IActionResult> Register([FromBody] RegisterViewModel viewModel)
+    public async Task<IActionResult> Register([FromBody] RegisterViewModel viewModel)
     {
         if (!ModelState.IsValid) 
-            return Task.FromResult<IActionResult>(BadRequest(ModelState));
+            return BadRequest(ModelState);
 
-        var response = _appService.RegisterUser(viewModel);
+        var response = await _appService.RegisterUser(viewModel);
 
-        return Task.FromResult<IActionResult>(Ok(response));
+        return Ok(response);
     }
     
     [Authorize(Roles = "admin")]

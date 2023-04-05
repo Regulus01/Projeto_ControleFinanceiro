@@ -19,5 +19,6 @@ public class PessoaContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new PessoaMap());
+        modelBuilder.ApplyConfiguration(new EnderecoMap());
     }
 }

@@ -4,5 +4,5 @@ namespace Application.Gerencia.Interface;
 
 public interface IPessoaAppService
 {
-    Task<string> RegistrarPessoa(RegistrarPessoaViewModel viewmodel);
+    Task<string> RegistrarPessoa(RegistrarPessoaViewModel viewModel);
 }
