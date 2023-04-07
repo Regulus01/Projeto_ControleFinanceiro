@@ -1,4 +1,5 @@
 using Application.Gerencia.ViewModels.Pessoa;
+using Application.Gerencia.ViewModels.Pessoa.Enum;
 using AutoMapper;
 using Domain.Gerencia.Commands;
 
@@ -9,5 +10,7 @@ public class PessoaMapProfile : Profile
     public PessoaMapProfile()
     {
         CreateMap<RegistrarPessoaViewModel, RegisterPessoaCommand>();
+        CreateMap<EnderecoViewModel, EnderecoCommand>();
+        CreateMap<SexoViewModel, SexoCommand>();
     }
 }

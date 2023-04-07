@@ -26,9 +26,6 @@ public class PessoaMap : IEntityTypeConfiguration<Pessoa>
         builder.Property(x => x.Sexo)
             .HasColumnName("Sexo");
 
-        builder.Property(x => x.EnderecoId)
-            .HasColumnName("EnderecoId");
-        
         builder.HasOne(x => x.Endereco)
             .WithOne(x => x.Pessoa)
             .HasForeignKey<Endereco>(x => x.Id);

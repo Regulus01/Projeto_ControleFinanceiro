@@ -10,8 +10,7 @@ public class Usuario
     public string PasswordHash { get; set; }
     public string Slug { get; set; }
     public Guid RoleId { get; set; }
-    public Role Role { get; set; }
-    
+    public virtual Role Role { get; set; }
     public Guid PessoaId { get; set; }
     public virtual Pessoa Pessoa { get; set; }
 

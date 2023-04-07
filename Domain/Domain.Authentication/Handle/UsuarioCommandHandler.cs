@@ -59,9 +59,8 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
         if (apiKey == null)
-        {
             return;
-        }
+        
         var client = new SendGridClient(apiKey);
 
         var from = new EmailAddress("josecssj.games@gmail.com", "Aline Ramos");

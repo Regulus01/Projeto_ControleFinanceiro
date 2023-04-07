@@ -22,42 +22,6 @@ namespace Infra.Gerencia.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Gerencia.Entities.Endereco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Bairro");
-
-                    b.Property<int>("Cep")
-                        .HasMaxLength(8)
-                        .HasColumnType("integer")
-                        .HasColumnName("Cep");
-
-                    b.Property<string>("Localidade")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Localidade");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Logradouro");
-
-                    b.Property<string>("Uf")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Uf");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Endereco", "Gerencia");
-                });
-
             modelBuilder.Entity("Domain.Gerencia.Entities.Pessoa", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,9 +32,10 @@ namespace Infra.Gerencia.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DataDeNascimento");
 
-                    b.Property<Guid>("EnderecoId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("EnderecoId");
+                    b.Property<string>("Endereco")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Endereco");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -89,98 +54,6 @@ namespace Infra.Gerencia.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pessoa", "Gerencia");
-                });
-
-            modelBuilder.Entity("Domain.Gerencia.Shared.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("Domain.Gerencia.Shared.Usuario.Usuario", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("PessoaId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PessoaId")
-                        .IsUnique();
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("Domain.Gerencia.Entities.Endereco", b =>
-                {
-                    b.HasOne("Domain.Gerencia.Entities.Pessoa", "Pessoa")
-                        .WithOne("Endereco")
-                        .HasForeignKey("Domain.Gerencia.Entities.Endereco", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pessoa");
-                });
-
-            modelBuilder.Entity("Domain.Gerencia.Shared.Usuario.Usuario", b =>
-                {
-                    b.HasOne("Domain.Gerencia.Entities.Pessoa", "Pessoa")
-                        .WithOne("Usuario")
-                        .HasForeignKey("Domain.Gerencia.Shared.Usuario.Usuario", "PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Gerencia.Shared.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pessoa");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Domain.Gerencia.Entities.Pessoa", b =>
-                {
-                    b.Navigation("Endereco")
-                        .IsRequired();
-
-                    b.Navigation("Usuario")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

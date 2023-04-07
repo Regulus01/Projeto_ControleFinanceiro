@@ -4,7 +4,7 @@ using AutoMapper;
 
 namespace Application.Gerencia.AutoMapper;
 
-public class AutoMapperConfig
+public static class AutoMapperConfig
 {
     public static MapperConfiguration RegisterMaps()
     {

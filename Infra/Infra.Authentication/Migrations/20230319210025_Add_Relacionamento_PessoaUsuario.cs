@@ -36,11 +36,11 @@ namespace Infra.Authentication.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Pessoa_Usuario_Id",
-                table: "Pessoa",
-                schema: "Gerencia",
+                table: "Usuario",
+                schema: "Autenticacao",
                 column: "Id",
-                principalSchema: "Autenticacao",
-                principalTable: "Usuario",
+                principalSchema: "Gerencia",
+                principalTable: "Pessoa",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
             
@@ -53,6 +53,7 @@ namespace Infra.Authentication.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Pessoa_Usuario_Id",
+                schema: "Gerencia",
                 table: "Pessoa");
 
             migrationBuilder.DropColumn(
