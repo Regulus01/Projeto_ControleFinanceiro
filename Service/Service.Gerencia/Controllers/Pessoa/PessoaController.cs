@@ -1,13 +1,12 @@
 using Application.Gerencia.Interface;
 using Application.Gerencia.ViewModels.Pessoa;
-using Infra.CrossCutting.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Service.Gerencia.Controllers.Pessoa;
 
 [Authorize]
-[Route("api/Usuario")]
+[Route("api/Pessoa")]
 [ApiController]
 public class PessoaController : ControllerBase
 {

@@ -10,4 +10,9 @@ public class Endereco
     public string Uf { get; set; }
 
     public virtual Pessoa Pessoa { get; set; }
+
+    public void InformeEnderecoId(Guid id)
+    {
+        Id = id;
+    }
 }

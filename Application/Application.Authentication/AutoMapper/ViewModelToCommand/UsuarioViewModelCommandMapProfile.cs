@@ -9,5 +9,8 @@ public class UsuarioViewModelCommandMapProfile : Profile
     public UsuarioViewModelCommandMapProfile()
     {
         CreateMap<RegisterViewModel, RegisterUserCommand>();
+        CreateMap<RegistrarPessoaViewModel, RegisterPessoaCommand>();
+        CreateMap<EnderecoViewModel, EnderecoCommand>();
+        CreateMap<SexoViewModel, SexoCommand>();
     }
 }

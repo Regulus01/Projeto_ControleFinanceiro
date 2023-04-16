@@ -31,6 +31,7 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         
         var user = _mapper.Map<Usuario>(request);
         
+        
         _repository.AdicionarUsuario(user);
         
         try
@@ -54,6 +55,12 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
     
     }
 
+    private async Task RegistrarPessoaAnotherService(RegisterUserCommand userCommand)
+    {
+        var action = "api/Pessoa/v1/RegistrarPessoa";
+
+        return;
+    }
     private async Task EnviarEmailDeBoasVidas(string userEmail, string userName)
     {
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");

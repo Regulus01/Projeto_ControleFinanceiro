@@ -25,6 +25,7 @@ public class PessoaCommandHandler : IRequestHandler<RegisterPessoaCommand, Pesso
         var pessoa = _mapper.Map<Pessoa>(request);
         
         _repository.AdicionarPessoa(pessoa);
+
         _repository.Commit();
         
         var pessoaEvent = new PessoaCadastradaEvent
