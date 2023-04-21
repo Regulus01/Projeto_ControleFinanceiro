@@ -30,12 +30,4 @@
 
         <Copy SourceFiles="@(SourceConfig)" DestinationFolder="./Config" SkipUnchangedFiles="true" />
     </Target>
-
-    <Target Name="PublishTarget" AfterTargets="Build">
-        <ItemGroup>
-            <BuildArtifacts Include="$(TargetPath)" />
-            <BuildArtifacts Include="$(TargetDir)\**\*.*" Exclude="$(TargetPath)" />
-        </ItemGroup>
-        <Copy SourceFiles="@(BuildArtifacts)" DestinationFolder="$(TargetDir)\publish" />
-    </Target>
 </Project>
