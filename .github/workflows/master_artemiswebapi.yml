@@ -54,4 +54,4 @@ jobs:
           app-name: 'ArtemisWebApi'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_569C4E7A402041EF84CC7626D0BCC0CC }}
-          package: .
+          package: ./Service/Service.Authentication/Service.Authentication.csproj
