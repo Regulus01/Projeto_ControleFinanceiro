@@ -54,4 +54,4 @@ jobs:
           app-name: 'ArtemisGerencia'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_50E6E368C5654AA78AAD928FDB2DACED }}
-          package: ./Service/Service.Gerencia/Service.Gerencia.csproj
+          package: ./Service/Service.Gerencia/bin/Debug/net6.0/publish

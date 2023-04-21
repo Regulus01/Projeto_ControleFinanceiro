@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
@@ -31,5 +30,13 @@
         </ItemGroup>
 
         <Copy SourceFiles="@(SourceConfig)" DestinationFolder="./Config" SkipUnchangedFiles="true" />
+    </Target>
+
+    <Target Name="PublishTarget" AfterTargets="Build">
+        <ItemGroup>
+            <BuildArtifacts Include="$(TargetPath)" />
+            <BuildArtifacts Include="$(TargetDir)\**\*.*" Exclude="$(TargetPath)" />
+        </ItemGroup>
+        <Copy SourceFiles="@(BuildArtifacts)" DestinationFolder="$(TargetDir)\publish" />
     </Target>
 </Project>
