@@ -4,6 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <AspNetCoreHostingModel>inprocess</AspNetCoreHostingModel>
+        <PublishProfile>FolderProfile</PublishProfile>
+        <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <SelfContained>true</SelfContained>
+        <OutputPath>$(PublishDir)</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
