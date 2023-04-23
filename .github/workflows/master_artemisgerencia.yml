@@ -45,7 +45,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
+          name: .net-app-service-gerencia 
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
