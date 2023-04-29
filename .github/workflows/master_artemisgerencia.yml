@@ -46,7 +46,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: .net-app-service-gerencia 
-
+          
+      - name: List files in publish directory
+        run: ls -R ${{env.DOTNET_ROOT}}/myapp
+        
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -54,4 +57,4 @@ jobs:
           app-name: 'ArtemisGerencia'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_50E6E368C5654AA78AAD928FDB2DACED }}
-          package: ./Service/Service.Gerencia/bin/Debug/net6.0/publish
+          package: ./Service/Service.Gerencia/bin/Debug/net6.0/publish 
