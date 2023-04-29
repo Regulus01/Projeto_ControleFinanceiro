@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Domain.Gerencia.Commands;
 
-public class RegisterPessoaCommand : IRequest<PessoaCadastradaEvent>
+public class RegisterPessoaCommandGerencia : IRequest<PessoaCadastradaEvent>
 {
     public Guid Id { get; set; }
     public string Nome { get; set; }

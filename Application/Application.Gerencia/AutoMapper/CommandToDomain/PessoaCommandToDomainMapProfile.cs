@@ -9,7 +9,7 @@ public class PessoaCommandToDomainMapProfile : Profile
 {
     public PessoaCommandToDomainMapProfile()
     {
-        CreateMap<RegisterPessoaCommand, Pessoa>()
+        CreateMap<RegisterPessoaCommandGerencia, Pessoa>()
             .ForMember(x => x.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
         CreateMap<EnderecoCommand, Endereco>()
             .ForMember(x => x.Id, opt => opt.MapFrom(src => Guid.NewGuid()));

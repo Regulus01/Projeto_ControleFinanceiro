@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Domain.Gerencia.Handle;
 
-public class PessoaCommandHandler : IRequestHandler<RegisterPessoaCommand, PessoaCadastradaEvent>
+public class PessoaCommandHandler : IRequestHandler<RegisterPessoaCommandGerencia, PessoaCadastradaEvent>
 {
     private readonly IPessoaRepository _repository;
     private readonly IMediator _mediator;
@@ -20,7 +20,7 @@ public class PessoaCommandHandler : IRequestHandler<RegisterPessoaCommand, Pesso
         _mapper = mapper;
     }
 
-    public Task<PessoaCadastradaEvent> Handle(RegisterPessoaCommand request, CancellationToken cancellationToken)
+    public Task<PessoaCadastradaEvent> Handle(RegisterPessoaCommandGerencia request, CancellationToken cancellationToken)
     {
         var pessoa = _mapper.Map<Pessoa>(request);
         

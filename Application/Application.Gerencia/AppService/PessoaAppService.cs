@@ -20,7 +20,7 @@ public class PessoaAppService : IPessoaAppService
 
     public Task<PessoaCadastradaEvent> RegistrarPessoa(RegistrarPessoaViewModel viewModel)
     {
-        var pessoa = _mapper.Map<RegisterPessoaCommand>(viewModel);
+        var pessoa = _mapper.Map<RegisterPessoaCommandGerencia>(viewModel);
 
         var evento = _mediator.Send(pessoa);
 

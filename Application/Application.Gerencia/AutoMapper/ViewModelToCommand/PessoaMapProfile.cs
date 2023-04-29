@@ -9,7 +9,7 @@ public class PessoaMapProfile : Profile
 {
     public PessoaMapProfile()
     {
-        CreateMap<RegistrarPessoaViewModel, RegisterPessoaCommand>();
+        CreateMap<RegistrarPessoaViewModel, RegisterPessoaCommandGerencia>();
         CreateMap<EnderecoViewModel, EnderecoCommand>();
         CreateMap<SexoViewModel, SexoCommand>();
     }

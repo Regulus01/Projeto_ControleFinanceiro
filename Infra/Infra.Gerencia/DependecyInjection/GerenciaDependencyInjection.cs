@@ -51,7 +51,7 @@ public class GerenciaDependencyInjection : BaseDependencyInjection
         //Mediatr commands
         serviceProvider.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssemblies(typeof(RegisterPessoaCommand).Assembly);
+            config.RegisterServicesFromAssemblies(typeof(RegisterPessoaCommandGerencia).Assembly);
             
         });
     }

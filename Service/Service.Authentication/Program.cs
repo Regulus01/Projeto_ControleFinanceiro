@@ -1,10 +1,6 @@
-using System.Data.Common;
 using System.Reflection;
-using Infra.Authentication.Context;
 using Infra.Authentication.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,19 +46,6 @@ builder.Services.AddSwaggerGen(c =>
 
 //Servicos
 UsuarioDependencyInjection.Register(builder.Services);
-
-//DBConnection
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-    .AddJsonFile("Config/appsettings.json")
-    .Build(); // Obtem o appsettings da pasta de configuracao
-
-DbConnection dbConnection = new NpgsqlConnection(configuration.GetConnectionString("app"));
-builder.Services.AddDbContext<AuthenticationContext>(opt =>
-{
-    opt.UseNpgsql(dbConnection, assembly =>
-        assembly.MigrationsAssembly(typeof(AuthenticationContext).Assembly.FullName));
-});
 
 var app = builder.Build();
 
