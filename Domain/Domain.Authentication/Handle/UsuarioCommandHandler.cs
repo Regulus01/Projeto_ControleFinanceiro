@@ -47,7 +47,7 @@ public partial class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand
         {
             _repository.Commit();
             Console.WriteLine("Usuario criado com sucesso " + request.Email);
-            await _mediator.Publish(new UsuarioCriadoNotification { Nome = user.Name, Email = user.Email }, cancellationToken);
+            await _mediator.Publish(new UsuarioCriadoNotification { Nome = response.Nome, Email = user.Email }, cancellationToken);
         }
         catch (Exception ex)
         {
