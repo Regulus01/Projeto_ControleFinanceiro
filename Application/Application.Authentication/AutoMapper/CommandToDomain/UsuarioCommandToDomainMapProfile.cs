@@ -11,6 +11,8 @@ public class UsuarioCommandMapProfile : Profile
     public UsuarioCommandMapProfile()
     {
          CreateMap<RegisterUserCommand, Usuario>()
+             .ForMember(x => x.Pessoa, config => config.Ignore())
+             
         .ConstructUsing(x => new Usuario(
             x.Name,
             x.Email,

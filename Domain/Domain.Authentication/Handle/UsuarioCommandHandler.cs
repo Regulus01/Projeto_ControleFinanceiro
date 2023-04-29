@@ -9,7 +9,7 @@ using SendGrid.Helpers.Mail;
 
 namespace Domain.Authentication.Handle;
 
-public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string>
+public partial class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string>
 {
     private readonly IUsuarioRepository _repository;
     private readonly IMediator _mediator;
@@ -28,10 +28,19 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
         {
             return "O email cadastrado já existe.";
         }
+
+        var response = await RegistrarPessoaAnotherService(request.Pessoa);
+
+        if (response == null)
+            return "Ocorreu um erro no momento do cadastro";
         
         var user = _mapper.Map<Usuario>(request);
         
-        
+        if (response.PessoaId != null) 
+            user.InformePessoaId(response.PessoaId.Value);
+        else
+            return "Ocorreu um erro no momento do cadastro";
+
         _repository.AdicionarUsuario(user);
         
         try
@@ -47,35 +56,11 @@ public class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand, string
             await _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
                 cancellationToken);
 
-            return "Ocorreu um erro no momento do cadastro: ";
+            return "Ocorreu um erro no momento do cadastro";
         }
 
         await EnviarEmailDeBoasVidas(user.Email, user.Name);
         return "Usuário criado com sucesso.";
     
-    }
-
-    private async Task RegistrarPessoaAnotherService(RegisterUserCommand userCommand)
-    {
-        var action = "api/Pessoa/v1/RegistrarPessoa";
-
-        return;
-    }
-    private async Task EnviarEmailDeBoasVidas(string userEmail, string userName)
-    {
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-
-        if (apiKey == null)
-            return;
-        
-        var client = new SendGridClient(apiKey);
-
-        var from = new EmailAddress("josecssj.games@gmail.com", "Aline Ramos");
-        var to = new EmailAddress(userEmail, userName);
-
-        var userObject = new { username = userName };
-
-        var templateMessage = MailHelper.CreateSingleTemplateEmail(from, to, "d-381280346da44f5794bac24e52acbb5f", userObject);
-        await client.SendEmailAsync(templateMessage);
     }
 }

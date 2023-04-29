@@ -44,31 +44,7 @@ public class UsuarioController : ControllerBase
 
         return Ok(response);
     }
-    
-    [Authorize(Roles = "admin")]
-    [HttpPatch("v1/changeUserRole")]
-    public async Task<IActionResult> ChangeRole(Guid UserId,
-        Guid NewRoleId,
-        [FromServices] AuthenticationContext context)
-    {
-        var user = await context
-            .Users
-            .FirstOrDefaultAsync(x => x.Id == UserId);
 
-        var role = await context
-            .Roles
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == NewRoleId);
-
-        if (user == null || role == null)
-            return StatusCode(401, "Invalid Id");
-
-        user.Role = role;
-
-        await context.SaveChangesAsync();
-        return Ok();
-    }
-    
     [HttpGet]
     [Route("anonymous")]
     [AllowAnonymous]

@@ -43,7 +43,7 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
 
         builder.HasOne(x => x.Pessoa)
             .WithOne(x => x.Usuario)
-            .HasForeignKey<Pessoa>(x => x.Id);
+            .HasForeignKey<Usuario>(x => x.PessoaId);
             
         builder.HasIndex(x => x.Slug, "IX_User_Slug")
                 .IsUnique();
