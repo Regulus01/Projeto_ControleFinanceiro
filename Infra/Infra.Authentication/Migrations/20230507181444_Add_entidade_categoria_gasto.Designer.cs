@@ -3,6 +3,7 @@ using System;
 using Infra.Authentication.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infra.Authentication.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20230507181444_Add_entidade_categoria_gasto")]
+    partial class Addentidadecategoriagasto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,13 +37,7 @@ namespace Infra.Authentication.Migrations
                         .HasColumnType("VARCHAR")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("UsuarioId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Categoria", "Autenticacao");
                 });
@@ -65,16 +62,10 @@ namespace Infra.Authentication.Migrations
                         .HasColumnType("VARCHAR")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("UsuarioId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId")
                         .IsUnique();
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Gasto", "Autenticacao");
                 });
@@ -178,17 +169,6 @@ namespace Infra.Authentication.Migrations
                     b.ToTable("Pessoa");
                 });
 
-            modelBuilder.Entity("Domain.Authentication.Entities.Categoria", b =>
-                {
-                    b.HasOne("Domain.Authentication.Entities.Usuario", "Usuario")
-                        .WithMany("Categorias")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("Domain.Authentication.Entities.Gasto", b =>
                 {
                     b.HasOne("Domain.Authentication.Entities.Categoria", "Categoria")
@@ -197,15 +177,7 @@ namespace Infra.Authentication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Authentication.Entities.Usuario", "Usuario")
-                        .WithMany("Gastos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Categoria");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Domain.Authentication.Entities.Usuario", b =>
@@ -231,13 +203,6 @@ namespace Infra.Authentication.Migrations
                 {
                     b.Navigation("Gasto")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Authentication.Entities.Usuario", b =>
-                {
-                    b.Navigation("Categorias");
-
-                    b.Navigation("Gastos");
                 });
 
             modelBuilder.Entity("Domain.Authentication.Shared.Pessoa", b =>

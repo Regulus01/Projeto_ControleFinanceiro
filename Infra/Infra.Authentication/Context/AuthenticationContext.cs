@@ -21,5 +21,7 @@ public class AuthenticationContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new UsuarioMap());
         modelBuilder.ApplyConfiguration(new RoleMap());
+        modelBuilder.ApplyConfiguration(new GastoMap());
+        modelBuilder.ApplyConfiguration(new CategoriaMap());
     }
 }

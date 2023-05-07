@@ -13,6 +13,8 @@ public class Usuario
     public virtual Role Role { get; private set; }
     public Guid PessoaId { get; private set; }
     public virtual Pessoa Pessoa { get; private set; }
+    public virtual List<Gasto> Gastos { get; private set; }
+    public virtual List<Categoria> Categorias { get; private set; }
 
     public Usuario(string name, string email, string passwordHash, string slug, Guid roleId)
     {
