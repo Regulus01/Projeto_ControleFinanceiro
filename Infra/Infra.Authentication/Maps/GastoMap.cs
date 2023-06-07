@@ -21,12 +21,15 @@ public class GastoMap : IEntityTypeConfiguration<Gasto>
         builder.Property(x => x.Data)
             .HasColumnName("Data");
         
+        builder.Property(x => x.Valor)
+            .HasColumnName("Valor");
+        
         builder.Property(x => x.CategoriaId)
             .HasColumnName("CategoriaId");
 
         builder.HasOne(x => x.Categoria)
-            .WithOne(x => x.Gasto)
-            .HasForeignKey<Gasto>(x => x.CategoriaId);
+            .WithMany(x => x.Gastos)
+            .HasForeignKey(x => x.CategoriaId);
         
         builder.Property(x => x.UsuarioId)
             .HasColumnName("UsuarioId");

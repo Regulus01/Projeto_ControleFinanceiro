@@ -4,8 +4,6 @@ using Domain.Authentication.Commands.Notification;
 using Domain.Authentication.Entities;
 using Domain.Authentication.Interface;
 using MediatR;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace Domain.Authentication.Handle;
 
@@ -31,6 +29,7 @@ public partial class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand
 
         var response = await RegistrarPessoaAnotherService(request.Pessoa);
 
+        
         if (response == null)
             return "Ocorreu um erro no momento do cadastro";
         
@@ -42,6 +41,21 @@ public partial class UsuarioCommandHandler : IRequestHandler<RegisterUserCommand
             return "Ocorreu um erro no momento do cadastro";
 
         _repository.AdicionarUsuario(user);
+        
+        //Categoria 
+        var categorias = new List<Categoria>
+        {
+            new Categoria(Guid.NewGuid(), "Alimentação", user.Id ),
+            new Categoria(Guid.NewGuid(), "Moradia ", user.Id ),
+            new Categoria(Guid.NewGuid(), "Transporte ", user.Id ),
+            new Categoria(Guid.NewGuid(), "Saúde ", user.Id ),
+            new Categoria(Guid.NewGuid(), "Educação ", user.Id ),
+            new Categoria(Guid.NewGuid(), "Lazer e entretenimento ", user.Id ),
+            new Categoria(Guid.NewGuid(), "Vestuário e acessórios", user.Id ),
+            new Categoria(Guid.NewGuid(), "Outros", user.Id ),
+        };
+        
+        _repository.AdicionarCategorias(categorias);
         
         try
         {

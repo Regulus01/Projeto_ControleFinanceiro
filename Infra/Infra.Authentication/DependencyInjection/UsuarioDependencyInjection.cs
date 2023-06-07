@@ -76,6 +76,7 @@ public class UsuarioDependencyInjection : BaseDependencyInjection
         serviceProvider.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblies(typeof(RegisterUserCommand).Assembly);
+            config.RegisterServicesFromAssemblies(typeof(RegisterGastoCommand).Assembly);
             //ToDo: Remover após resolver o problema com a azure 
             config.RegisterServicesFromAssemblies(typeof(RegisterPessoaCommandGerencia).Assembly);
         });

@@ -8,6 +8,7 @@ public class AuthenticationContext : DbContext
 {
     public DbSet<Usuario> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Categoria?> Categorias { get; set; }
     
     public AuthenticationContext()
     {

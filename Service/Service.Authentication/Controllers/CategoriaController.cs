@@ -1,3 +1,4 @@
+using Application.Authentication.Interface;
 using Application.Authentication.ViewModels.Categoria;
 using Infra.CrossCutting.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -11,12 +12,15 @@ namespace Service.Authentication.Controllers;
 public class CategoriaController : ControllerBase
 {
     private readonly IAuthenticatedUser _user;
+    private readonly IUsuarioAppService _appService;
 
-    public CategoriaController(IAuthenticatedUser user)
+    public CategoriaController(IAuthenticatedUser user, IUsuarioAppService appService)
     {
         _user = user;
+        _appService = appService;
     }
 
+    /*
     /// <summary>
     /// Endpoint utilizado para inserir uma nova categoria para o usuário
     /// </summary>
@@ -28,4 +32,21 @@ public class CategoriaController : ControllerBase
     {
         
     }
+    */
+    
+
+    /// <summary>
+    /// Endpoint utilizado para obter as categorias do usuário
+    /// </summary>
+    /// <returns></returns>
+    [Route("ObterCategorias")]
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> ObterCategorias()
+    {
+        var categorias = _appService.ObterCategorias();
+
+        return Ok(categorias);
+    }
+    
 }

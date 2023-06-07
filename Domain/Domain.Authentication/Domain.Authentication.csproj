@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UserSecretsId>38818863-7d06-4a5c-90dc-58c8170116dd</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,12 @@
 
     <ItemGroup>
       <Folder Include="Shared\Requests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Infra.CrossCutting">
+        <HintPath>..\..\Service\Service.Authentication\bin\Debug\net6.0\Infra.CrossCutting.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

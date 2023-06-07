@@ -1,6 +1,7 @@
 namespace Application.Authentication.ViewModels.Categoria;
 
 public class CategoriaViewModel
-{ 
-    public string Nome { get; private set; }
+{
+    public Guid Id { get; set; }
+    public string Nome { get; set;  }
 }

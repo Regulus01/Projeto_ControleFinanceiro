@@ -3,6 +3,7 @@ using System;
 using Infra.Authentication.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infra.Authentication.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20230607201450_Insert_valor_gasto")]
+    partial class Insertvalorgasto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,8 @@ namespace Infra.Authentication.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("CategoriaId")
+                        .IsUnique();
 
                     b.HasIndex("UsuarioId");
 
@@ -195,8 +199,8 @@ namespace Infra.Authentication.Migrations
             modelBuilder.Entity("Domain.Authentication.Entities.Gasto", b =>
                 {
                     b.HasOne("Domain.Authentication.Entities.Categoria", "Categoria")
-                        .WithMany("Gastos")
-                        .HasForeignKey("CategoriaId")
+                        .WithOne("Gasto")
+                        .HasForeignKey("Domain.Authentication.Entities.Gasto", "CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -232,7 +236,8 @@ namespace Infra.Authentication.Migrations
 
             modelBuilder.Entity("Domain.Authentication.Entities.Categoria", b =>
                 {
-                    b.Navigation("Gastos");
+                    b.Navigation("Gasto")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Authentication.Entities.Usuario", b =>

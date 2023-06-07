@@ -15,6 +15,9 @@ public static class AutoMapperConfig
             config.AddProfile<UsuarioCommandMapProfile>();
             config.AddProfile<UsuarioViewModelCommandMapProfile>();
             config.AddProfile<TokenViewModelCommandMapProfile>();
+            config.AddProfile<CategoriaAppServiceMapProfile>();
+            config.AddProfile<GastoCommandToDomainMapProfile>();
+            config.AddProfile<GastoViewModelCommandMapProfile>();
             
             //ToDo: Remover após resolver o problema com a azure  
             config.AddProfile<PessoaMapProfile>();
