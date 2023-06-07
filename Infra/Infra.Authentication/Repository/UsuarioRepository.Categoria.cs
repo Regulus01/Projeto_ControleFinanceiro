@@ -4,7 +4,7 @@ namespace Infra.Authentication.Repository;
 
 public partial class UsuarioRepository
 {
-    public void AdicionarCategorias(List<Categoria> categorias)
+    public void AdicionarCategorias(IEnumerable<Categoria> categorias)
     {
         _context.AddRange(categorias);
     }

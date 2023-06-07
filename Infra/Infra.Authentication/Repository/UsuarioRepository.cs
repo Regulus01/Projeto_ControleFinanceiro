@@ -1,4 +1,5 @@
-﻿using Domain.Authentication.Entities;
+﻿using System.Linq.Expressions;
+using Domain.Authentication.Entities;
 using Domain.Authentication.Interface;
 using Infra.Authentication.Context;
 using Microsoft.EntityFrameworkCore;
@@ -43,10 +44,10 @@ public partial class UsuarioRepository : IUsuarioRepository
     {
         _context.Add(usuario);
     }
-
-    public Categoria? ObterGastoPorId(Guid categoriaId)
+    
+    public Categoria? ObterCategoriaPorId(Guid categoriaId)
     {
-        return _context.Categorias.FirstOrDefault(x => x != null && x.Id == categoriaId);
+        return _context.Categorias.FirstOrDefault(x => x.Id == categoriaId);
     }
 
     public void AdicionarGasto(Gasto gasto)

@@ -9,6 +9,9 @@ public interface IUsuarioAppService
 {
     Task<string> RegisterUser(RegisterViewModel viewmodel);
     Task<string> InserirGasto(GastoViewModel gastoViewModel);
+
+    List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
+                                                 bool trintaDias = false);
     List<CategoriaViewModel> ObterCategorias();
     Guid? TesteAppService();
 }

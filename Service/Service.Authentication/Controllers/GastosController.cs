@@ -30,4 +30,30 @@ public class GastosController : ControllerBase
         var response = _appService.InserirGasto(gastoViewModel);
         return Ok(response);
     }
+    
+    /// <summary>
+    /// EndPoint utilizado para obter gastos do usuário
+    /// </summary>
+    /// <returns></returns>
+    [Route("ObterGastos")]
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim)
+    {
+        var response = _appService.ObterGastos(dataInicio, dataFim);
+        return Ok(response);
+    }
+    
+    /// <summary>
+    /// EndPoint utilizado para obter gastos dos ultimos 30 dias.
+    /// </summary>
+    /// <returns></returns>
+    [Route("ObterGastosTrintaDias")]
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> ObterGastosTrintaDias()
+    {
+        var response = _appService.ObterGastos(null, null, true);
+        return Ok(response);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Authentication.Entities;
+﻿using System.Linq.Expressions;
+using Domain.Authentication.Entities;
 
 namespace Domain.Authentication.Interface;
 
@@ -6,9 +7,10 @@ public interface IUsuarioRepository
 {
     bool EmailCadastrado(string email);
     List<Categoria> ObterCategoriasDoUsuario(Guid usuarioId);
-    void AdicionarCategorias(List<Categoria> categorias);
+    List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate);
+    void AdicionarCategorias(IEnumerable<Categoria> categorias);
     void AdicionarUsuario(Usuario usuario);
-    Categoria? ObterGastoPorId(Guid categoriaId);
+    Categoria? ObterCategoriaPorId(Guid categoriaId);
     void AdicionarGasto(Gasto gasto);
     Usuario? ObterUsuarioPorId(Guid id);
     void Commit();

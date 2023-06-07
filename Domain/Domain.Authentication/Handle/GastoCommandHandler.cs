@@ -30,7 +30,7 @@ public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
         
         _repository.AdicionarGasto(gasto);
 
-        var categoria = _repository.ObterGastoPorId(request.CategoriaId);
+        var categoria = _repository.ObterCategoriaPorId(request.CategoriaId);
         
         try
         {
