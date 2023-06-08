@@ -32,6 +32,11 @@ public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
 
         var categoria = _repository.ObterCategoriaPorId(request.CategoriaId);
         
+        if (categoria == null)
+        {
+            return "Categoria informada não existe.";
+        }
+        
         try
         {
             _repository.Commit();

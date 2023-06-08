@@ -65,6 +65,9 @@ namespace Infra.Authentication.Migrations
                         .HasColumnType("VARCHAR")
                         .HasColumnName("Nome");
 
+                    b.Property<int>("Tipo")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uuid")
                         .HasColumnName("UsuarioId");
@@ -178,7 +181,7 @@ namespace Infra.Authentication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pessoa", (string)null);
+                    b.ToTable("Pessoa");
                 });
 
             modelBuilder.Entity("Domain.Authentication.Entities.Categoria", b =>
