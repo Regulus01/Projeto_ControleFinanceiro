@@ -178,7 +178,7 @@ namespace Infra.Authentication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pessoa");
+                    b.ToTable("Pessoa", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Authentication.Entities.Categoria", b =>

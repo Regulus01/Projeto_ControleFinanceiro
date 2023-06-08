@@ -5,7 +5,7 @@ namespace Application.Gerencia.ViewModels.Pessoa;
 public class RegistrarPessoaViewModel
 {
     public string Nome { get; set; }
-    public int Telefone { get; set; }
+    public long Telefone { get; set; }
     public EnderecoViewModel Endereco { get; set; }
     public DateTime DataDeNascimento { get; set; }
     public SexoViewModel Sexo { get; set; }

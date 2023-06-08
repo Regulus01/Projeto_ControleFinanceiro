@@ -7,7 +7,7 @@ public class Pessoa
 {
     public Guid Id { get; private set; }
     public string Nome { get; private set; }
-    public int Telefone { get; private set; }
+    public long Telefone { get; private set; }
     public Guid EnderecoId { get; private set; }
     public virtual Endereco Endereco { get; private set; }
     public DateTime DataDeNascimento { get; private set; }
