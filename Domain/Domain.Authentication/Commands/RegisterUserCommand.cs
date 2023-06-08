@@ -14,7 +14,7 @@ public class RegisterUserCommand : IRequest<string>
 public class RegisterPessoaCommand
 {
     public string Nome { get; set; }
-    public int Telefone { get; set; }
+    public long Telefone { get; set; }
     public EnderecoCommand Endereco { get; set; }
     public DateTime DataDeNascimento { get; set; }
     public SexoCommand Sexo { get; set; }
