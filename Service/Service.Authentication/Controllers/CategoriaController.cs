@@ -38,6 +38,9 @@ public class CategoriaController : ControllerBase
     /// <summary>
     /// Endpoint utilizado para obter as categorias do usuário
     /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para obter as categorias do usuário
+    /// </remarks>
     /// <returns></returns>
     [Route("ObterCategorias")]
     [HttpGet]

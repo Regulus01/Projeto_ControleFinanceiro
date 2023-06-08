@@ -19,11 +19,11 @@ public class PessoaController : ControllerBase
     }
 
     /// <summary>
-    /// EndPoint de uso do backend
-    /// <remarks>
-    ///     EndPoint utilizado para cadastrar a pessoa no Sistema
-    /// </remarks>
+    ///     EndPoint de uso do backend
     /// </summary>
+    /// <remarks>
+    ///     EndPoint Sem autorização utilizado para cadastrar a pessoa no Sistema
+    /// </remarks>
     /// <param name="viewModel"></param>
     /// <returns></returns>
     [AllowAnonymous]

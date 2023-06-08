@@ -32,6 +32,20 @@ public partial class UsuarioAppService
 
     }
 
+    public List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId)
+    {
+        if (categoriaId == Guid.Empty)
+        {
+            return new List<GastoComCategoriaViewModel>();
+        }
+
+        var result = _usuarioRepository.ObterGastos(x => x.CategoriaId.Equals(categoriaId));
+
+        var gastosComCategoria = _mapper.Map<List<GastoComCategoriaViewModel>>(result);
+
+        return gastosComCategoria;
+    }
+    
     public List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
         bool trintaDias = false)
     {

@@ -16,11 +16,13 @@ public class GastosController : ControllerBase
     {
         _appService = appService;
     }
-
     
     /// <summary>
     /// EndPoint utilizado para inserir gastos do usuário
     /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para inserir gastos do usuário
+    /// </remarks>
     /// <returns></returns>
     [Route("InserirGasto")]
     [HttpPost]
@@ -34,9 +36,12 @@ public class GastosController : ControllerBase
     /// <summary>
     /// EndPoint utilizado para obter gastos do usuário
     /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para obter os gastos do usuário
+    /// </remarks>
     /// <returns></returns>
     [Route("ObterGastos")]
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim)
     {
@@ -47,6 +52,9 @@ public class GastosController : ControllerBase
     /// <summary>
     /// EndPoint utilizado para obter gastos dos ultimos 30 dias.
     /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para obter os gastos do usuário
+    /// </remarks>
     /// <returns></returns>
     [Route("ObterGastosTrintaDias")]
     [HttpPost]
@@ -54,6 +62,22 @@ public class GastosController : ControllerBase
     public async Task<IActionResult> ObterGastosTrintaDias()
     {
         var response = _appService.ObterGastos(null, null, true);
+        return Ok(response);
+    }
+    
+    /// <summary>
+    /// EndPoint utilizado para obter gastos por categoria
+    /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para obter os gastos do usuário logado por categoria
+    /// </remarks>
+    /// <returns></returns>
+    [Route("ObterGastoPorCategoria")]
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> ObterGastoPorCategoria(Guid CategoriaId)
+    {
+        var response = _appService.ObterGastoPorCategoria(CategoriaId);
         return Ok(response);
     }
 }

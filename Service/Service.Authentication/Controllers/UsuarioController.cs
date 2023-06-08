@@ -44,32 +44,4 @@ public class UsuarioController : ControllerBase
 
         return Ok(response);
     }
-
-    [HttpGet]
-    [Route("anonymous")]
-    [AllowAnonymous]
-    public string Anonymous() => "Anônimo";
-
-    /// <summary>
-    ///     EndPoint utilizado para testes
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    [Route("authenticated")]
-    [Authorize]
-    public string Authenticated()
-    {
-        //operacoes para testes 
-        var x = 1;
-        var y = 3;
-        var idDoUsuarioLogado = _user.GetUserId();
-        var soma = x + y;
-        _appService.TesteAppService();
-        return String.Format("Autenticado - {0}", User.Identity.Name);
-    }
-
-    [HttpGet]
-    [Route("cliente")]
-    [Authorize(Roles = "cliente")]
-    public string Employee() => "cliente";
 }

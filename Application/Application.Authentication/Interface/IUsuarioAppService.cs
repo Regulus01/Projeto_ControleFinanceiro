@@ -1,7 +1,6 @@
 ﻿using Application.Authentication.ViewModels;
 using Application.Authentication.ViewModels.Categoria;
 using Application.Authentication.ViewModels.Gastos;
-using Domain.Authentication.Configuration;
 
 namespace Application.Authentication.Interface;
 
@@ -12,6 +11,7 @@ public interface IUsuarioAppService
 
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
                                                  bool trintaDias = false);
+    List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
     List<CategoriaViewModel> ObterCategorias();
-    Guid? TesteAppService();
+
 }

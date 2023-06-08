@@ -1,5 +1,6 @@
 ﻿using Application.Authentication.Interface;
 using Application.Authentication.ViewModels;
+using Application.Authentication.ViewModels.Gastos;
 using AutoMapper;
 using Domain.Authentication.Commands;
 using Domain.Authentication.Interface;
@@ -29,14 +30,5 @@ public partial class UsuarioAppService : IUsuarioAppService
         var result = await _mediator.Send(command);
         
         return result;
-    }
-    
-    public Guid? TesteAppService()
-    {
-        //App service utilizado para testes
-        var x = _user.GetUserId();
-        Console.WriteLine(x);
-
-        return x;
     }
 }
