@@ -39,7 +39,8 @@ public partial class UsuarioAppService
             return new List<GastoComCategoriaViewModel>();
         }
 
-        var result = _usuarioRepository.ObterGastos(x => x.CategoriaId.Equals(categoriaId));
+        var result = _usuarioRepository.ObterGastos(x => x.CategoriaId.Equals(categoriaId) && 
+                                                         x.UsuarioId.Equals(_user.GetUserId()));
 
         var gastosComCategoria = _mapper.Map<List<GastoComCategoriaViewModel>>(result);
 
@@ -49,7 +50,7 @@ public partial class UsuarioAppService
     public List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
         bool trintaDias = false, int? pagina = 0)
     {
-        Expression<Func<Gasto, bool>> predicate = x => true;
+        Expression<Func<Gasto, bool>> predicate = x => x.UsuarioId.Equals(_user.GetUserId());
 
         if (dataInicio.HasValue)
             predicate = predicate.And(x => x.Data >= dataInicio);
