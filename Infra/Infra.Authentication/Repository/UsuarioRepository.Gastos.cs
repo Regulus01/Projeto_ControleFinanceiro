@@ -12,14 +12,16 @@ public partial class UsuarioRepository
         int TamanhoPagina = 5;
 
         var gastos = _context
-                    .Gastos.Where(predicate)
-                    .Include(x => x.Categoria);
+            .Gastos.Where(predicate)
+            .Include(x => x.Categoria);
 
         if (pagina > 0)
         {
-            return gastos.Skip(TamanhoPagina * (pagina.Value - 1))
+            var teste =  gastos.OrderByDescending(x => x.Data).Skip(TamanhoPagina * (pagina.Value - 1))
                          .Take(TamanhoPagina)
-                         .OrderBy(x => x.Data).ToList();
+                         .ToList();
+
+            return teste;
         }
 
 
