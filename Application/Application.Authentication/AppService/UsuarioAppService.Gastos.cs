@@ -47,7 +47,7 @@ public partial class UsuarioAppService
     }
     
     public List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
-        bool trintaDias = false)
+        bool trintaDias = false, int? pagina = 0)
     {
         Expression<Func<Gasto, bool>> predicate = x => true;
 
@@ -65,7 +65,8 @@ public partial class UsuarioAppService
             return gastoTrintaDias;
         }
 
-        var gastoComCategoriaViewModel = _mapper.Map<List<GastoComCategoriaViewModel>>(_usuarioRepository.ObterGastos(predicate));
+        var gastoComCategoriaViewModel = _mapper.Map<List<GastoComCategoriaViewModel>>(_usuarioRepository
+            .ObterGastos(predicate, pagina));
 
         return gastoComCategoriaViewModel;
     }

@@ -43,9 +43,9 @@ public class GastosController : ControllerBase
     [Route("ObterGastos")]
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim)
+    public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim, int? pagina = 0)
     {
-        var response = _appService.ObterGastos(dataInicio, dataFim);
+        var response = _appService.ObterGastos(dataInicio, dataFim, pagina:pagina);
         return Ok(response);
     }
     

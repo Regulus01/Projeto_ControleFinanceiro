@@ -7,10 +7,22 @@ namespace Infra.Authentication.Repository;
 
 public partial class UsuarioRepository
 {
-    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate)
+    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0)
     {
-        var gastos = _context.Gastos.Where(predicate).Include(x => x.Categoria).ToList();
+        int TamanhoPagina = 5;
 
-        return gastos;
+        var gastos = _context
+                    .Gastos.Where(predicate)
+                    .Include(x => x.Categoria);
+
+        if (pagina > 0)
+        {
+            return gastos.Skip(TamanhoPagina * (pagina.Value - 1))
+                         .Take(TamanhoPagina)
+                         .OrderBy(x => x.Data).ToList();
+        }
+
+
+        return gastos.ToList();
     }
 }

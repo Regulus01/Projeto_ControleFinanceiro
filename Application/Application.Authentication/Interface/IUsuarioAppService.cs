@@ -10,7 +10,7 @@ public interface IUsuarioAppService
     Task<string> InserirGasto(GastoViewModel gastoViewModel);
 
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
-                                                 bool trintaDias = false);
+                                                 bool trintaDias = false, int? pagina = 0);
     List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
     List<CategoriaViewModel> ObterCategorias();
 

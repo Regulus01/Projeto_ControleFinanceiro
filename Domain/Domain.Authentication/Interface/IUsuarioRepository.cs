@@ -7,7 +7,7 @@ public interface IUsuarioRepository
 {
     bool EmailCadastrado(string email);
     List<Categoria> ObterCategoriasDoUsuario(Guid usuarioId);
-    List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate);
+    List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0);
     void AdicionarCategorias(IEnumerable<Categoria> categorias);
     void AdicionarUsuario(Usuario usuario);
     Categoria? ObterCategoriaPorId(Guid categoriaId);
