@@ -1,3 +1,4 @@
+using Application.Gerencia.ViewModels.Saldo;
 using AutoMapper;
 using Domain.Gerencia.Commands;
 using Domain.Gerencia.Entities;
@@ -13,6 +14,9 @@ public class PessoaCommandToDomainMapProfile : Profile
             .ForMember(x => x.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
         CreateMap<EnderecoCommand, Endereco>()
             .ForMember(x => x.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+
+        CreateMap<RegistrarSaldoCommand, Saldo>();
+        
         CreateMap<SexoCommand, Sexo>();
     }
 }

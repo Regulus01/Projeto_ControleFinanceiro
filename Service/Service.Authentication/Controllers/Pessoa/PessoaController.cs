@@ -1,5 +1,6 @@
 using Application.Authentication.ViewModels;
 using Application.Gerencia.Interface;
+using Application.Gerencia.ViewModels.Saldo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistrarPessoaViewModel2 = Application.Gerencia.ViewModels.Pessoa.RegistrarPessoaViewModel;
@@ -52,5 +53,14 @@ public class PessoaController : ControllerBase
         var response = _appService.RegistrarPessoa(pessoaTempViewModel);
 
         return Task.FromResult<IActionResult>(Ok(response));
+    }
+    
+    [Route("InserirSaldo")]
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> InserirSaldo(SaldoViewModel viewModel)
+    {
+        var response = _appService.InserirSaldo(viewModel);
+        return Ok(response);
     }
 }

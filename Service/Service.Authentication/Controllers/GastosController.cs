@@ -8,7 +8,7 @@ namespace Service.Authentication.Controllers;
 [Authorize]
 [Route("api/Categoria")]
 [ApiController]
-public class GastosController : ControllerBase
+public partial class GastosController : ControllerBase
 {
     private readonly IUsuarioAppService _appService;
 

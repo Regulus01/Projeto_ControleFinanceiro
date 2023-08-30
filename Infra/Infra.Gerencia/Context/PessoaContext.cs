@@ -7,6 +7,7 @@ namespace Infra.Gerencia.Context;
 public class PessoaContext : DbContext
 {
     public DbSet<Pessoa> Pessoas { get; set; }
+    public DbSet<Saldo> Saldo { get; set; }
 
     public PessoaContext()
     {
@@ -20,5 +21,6 @@ public class PessoaContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new PessoaMap());
         modelBuilder.ApplyConfiguration(new EnderecoMap());
+        modelBuilder.ApplyConfiguration(new SaldoMap());
     }
 }

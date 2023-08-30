@@ -1,3 +1,4 @@
+using Domain.Authentication.Entities;
 using Domain.Gerencia.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -33,6 +34,10 @@ public class PessoaMap : IEntityTypeConfiguration<Pessoa>
         builder.HasOne(x => x.Endereco)
             .WithOne(x => x.Pessoa)
             .HasForeignKey<Pessoa>(x => x.EnderecoId);
+
+        builder.HasOne(x => x.Usuario)
+            .WithOne(x => x.Pessoa)
+            .HasForeignKey<Usuario>(x => x.Id);
         
         builder.ToTable("Pessoa", "Gerencia");
     }

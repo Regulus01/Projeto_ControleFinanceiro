@@ -1,7 +1,9 @@
 using Application.Gerencia.Interface;
 using Application.Gerencia.ViewModels.Pessoa;
+using Application.Gerencia.ViewModels.Saldo;
 using AutoMapper;
 using Domain.Gerencia.Commands;
+using Infra.CrossCutting.Interface;
 using Infra.Gerencia.Events;
 using MediatR;
 
@@ -25,5 +27,18 @@ public class PessoaAppService : IPessoaAppService
         var evento = _mediator.Send(pessoa);
 
         return evento;
+    }
+    
+    public async Task<string> InserirSaldo(SaldoViewModel viewModel)
+    {
+        if (viewModel.Valor  <= 0)
+            return "O valor precisa ser maior que 0.";
+        
+        var command = _mapper.Map<RegistrarSaldoCommand>(viewModel);
+        
+        var result = await _mediator.Send(command);
+
+        return result;
+
     }
 }

@@ -12,6 +12,7 @@ public class Pessoa
     public virtual Endereco Endereco { get; private set; }
     public DateTime DataDeNascimento { get; private set; }
     public Sexo Sexo { get; private set; }
+    public virtual List<Saldo> Saldo { get; private set; }
     public virtual Usuario Usuario { get; private set; }
     
     public void InformeEnderecoId(Guid id)

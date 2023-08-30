@@ -12,5 +12,6 @@ public class Pessoa
     public string Endereco { get; set; }
     public DateTime DataDeNascimento { get; set; }
     public Sexo Sexo { get; set; }
+    public decimal Saldo { get; set; }
     public virtual Usuario Usuario { get; set; }
 }

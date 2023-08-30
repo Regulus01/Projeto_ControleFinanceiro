@@ -24,4 +24,5 @@ public class AuthenticatedUser : IAuthenticatedUser
         
         return null;
     }
+    
 }

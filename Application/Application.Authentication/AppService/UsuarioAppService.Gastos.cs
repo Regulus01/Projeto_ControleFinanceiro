@@ -31,7 +31,7 @@ public partial class UsuarioAppService
         return result;
 
     }
-
+    
     public List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId)
     {
         if (categoriaId == Guid.Empty)

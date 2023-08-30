@@ -1,5 +1,6 @@
 using Application.Gerencia.Interface;
 using Application.Gerencia.ViewModels.Pessoa;
+using Application.Gerencia.ViewModels.Saldo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,4 +34,5 @@ public class PessoaController : ControllerBase
 
         return Task.FromResult<IActionResult>(Ok(response));
     }
+
 }
