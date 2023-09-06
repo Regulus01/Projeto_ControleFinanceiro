@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Application.Authentication.Extensions;
 using Application.Authentication.ViewModels.Gastos;
+using Application.Authentication.ViewModels.Gastos.Enum;
 using Domain.Authentication.Commands;
 using Domain.Authentication.Entities;
 
@@ -10,11 +11,12 @@ public partial class UsuarioAppService
 {
     public async Task<string> InserirGasto(GastoViewModel gastoViewModel)
     {
-        if (gastoViewModel.CategoriaId == Guid.Empty)
+        if (gastoViewModel.CategoriaId == Guid.Empty || gastoViewModel.CategoriaId == null)
         {
-            return "É necessário informar uma categoria.";
+            gastoViewModel.CategoriaId = null;
+            gastoViewModel.Tipo = TipoDoGastoViewModel.Entrada;
         }
-        
+
         var command = _mapper.Map<RegisterGastoCommand>(gastoViewModel);
 
         var usuarioId = _user.GetUserId();
