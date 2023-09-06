@@ -12,6 +12,7 @@ public interface IUsuarioRepository
     void AdicionarUsuario(Usuario usuario);
     Categoria? ObterCategoriaPorId(Guid categoriaId);
     void AdicionarGasto(Gasto gasto);
+    void RemoverGasto(Gasto gasto);
     Usuario? ObterUsuarioPorId(Guid id);
     void Commit();
 }

@@ -32,6 +32,16 @@ public class GastosController : ControllerBase
         var response = _appService.InserirGasto(gastoViewModel);
         return Ok(response);
     }
+
+    [Route("RemoverGasto")]
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> RemoverGasto(Guid GastoId)
+    {
+        var response = _appService.RemoverGasto(GastoId);
+
+        return Ok(response);
+    }
     
     /// <summary>
     /// EndPoint utilizado para obter gastos do usuário

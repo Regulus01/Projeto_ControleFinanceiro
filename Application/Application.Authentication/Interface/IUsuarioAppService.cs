@@ -8,6 +8,7 @@ public interface IUsuarioAppService
 {
     Task<string> RegisterUser(RegisterViewModel viewmodel);
     Task<string> InserirGasto(GastoViewModel gastoViewModel);
+    Task<string> RemoverGasto(Guid gastoId);
 
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
                                                  bool trintaDias = false, int? pagina = 0);

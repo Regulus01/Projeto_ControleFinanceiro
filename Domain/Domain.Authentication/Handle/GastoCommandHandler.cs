@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Domain.Authentication.Handle;
 
-public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
+public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>, IRequestHandler<RemoverGastoCommand, string>
 {
     private readonly IUsuarioRepository _repository;
     private readonly IMediator _mediator;
@@ -54,6 +54,34 @@ public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
         }
 
         return "Gasto inserido com sucesso";
+
+    }
+
+    public async Task<string> Handle(RemoverGastoCommand request, CancellationToken cancellationToken)
+    {
+        var gasto = _repository.ObterGastos(x => x.Id == request.GastoId && x.UsuarioId == request.UsuarioId).FirstOrDefault();
+
+        if (gasto == null)
+            return "Gasto não encontrado";
+        
+        _repository.RemoverGasto(gasto);
+        _repository.Commit();
+        
+        try
+        {
+            _repository.Commit();
+            Console.WriteLine("Gasto removido com sucesso:  " + request);
+            await _mediator.Publish(new GastoCriadoNotification { Nome = gasto.Nome}, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            await _mediator.Publish(new ErroNotification { Excecao = ex.Message, PilhaErro = ex.StackTrace },
+                cancellationToken);
+
+            return "Ocorreu um erro no momento da inserção do gasto";
+        }
+
+        return "Gasto removido com sucesso";
 
     }
 }

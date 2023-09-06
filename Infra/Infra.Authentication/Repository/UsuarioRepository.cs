@@ -55,6 +55,11 @@ public partial class UsuarioRepository : IUsuarioRepository
         _context.Add(gasto);
     }
     
+    public void RemoverGasto(Gasto gasto)
+    {
+        _context.Remove(gasto);
+    }
+    
     public void Commit()
     {
         _context.SaveChanges();

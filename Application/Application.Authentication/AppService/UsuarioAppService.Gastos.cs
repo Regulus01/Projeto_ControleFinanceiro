@@ -34,6 +34,23 @@ public partial class UsuarioAppService
 
     }
 
+    public async Task<string> RemoverGasto(Guid gastoId)
+    {
+        var usuarioId = _user.GetUserId();
+
+        if (usuarioId != null)
+        {
+            var removerGastoCommand = new RemoverGastoCommand(gastoId, usuarioId.Value);
+            var command = _mapper.Map<RemoverGastoCommand>(removerGastoCommand);
+        
+            var result = await _mediator.Send(command);
+
+            return result;
+        }
+
+        return "Usuario nao encontrado";
+    }
+
     public List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId)
     {
         if (categoriaId == Guid.Empty)
