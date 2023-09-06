@@ -1,5 +1,6 @@
 using Application.Authentication.ViewModels;
 using Application.Gerencia.Interface;
+using Domain.Authentication.Shared.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistrarPessoaViewModel2 = Application.Gerencia.ViewModels.Pessoa.RegistrarPessoaViewModel;
@@ -30,7 +31,7 @@ public class PessoaController : ControllerBase
     [HttpPost("v1/RegistrarPessoa")]
     public Task<IActionResult> RegistrarPessoa([FromBody] RegistrarPessoaViewModel viewModel)
     {
-        var sexoValue = (int) viewModel.Sexo;
+        var sexoValue = 1;
         var sexoViewModelValue = sexoValue == 1 ? Application.Gerencia.ViewModels.Pessoa.Enum.SexoViewModel.Masculino : 
                                  Application.Gerencia.ViewModels.Pessoa.Enum.SexoViewModel.Feminino;
         var pessoaTempViewModel = new RegistrarPessoaViewModel2
@@ -39,13 +40,13 @@ public class PessoaController : ControllerBase
             Telefone = viewModel.Telefone,
             Endereco = new Application.Gerencia.ViewModels.Pessoa.EnderecoViewModel
             {
-                Cep = viewModel.Endereco.Cep,
-                Logradouro  = viewModel.Endereco.Localidade,
-                Bairro = viewModel.Endereco.Bairro,
-                Localidade = viewModel.Endereco.Localidade,
-                Uf  = viewModel.Endereco.Uf
+                Cep = 48300000,
+                Logradouro  = "Temporario",
+                Bairro = "Temporario",
+                Localidade = "Temporario",
+                Uf  = "SE"
             },
-            DataDeNascimento = viewModel.DataDeNascimento,
+            DataDeNascimento = DateTime.UtcNow,
             Sexo = sexoViewModelValue
         };
 

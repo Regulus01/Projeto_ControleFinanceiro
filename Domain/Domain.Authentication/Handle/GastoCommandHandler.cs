@@ -2,6 +2,7 @@ using AutoMapper;
 using Domain.Authentication.Commands;
 using Domain.Authentication.Commands.Notification;
 using Domain.Authentication.Entities;
+using Domain.Authentication.Entities.Enum;
 using Domain.Authentication.Interface;
 using MediatR;
 
@@ -27,21 +28,22 @@ public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
 
         gasto.InformeUsuarioId(request.UsuarioId);
         gasto.InformeDataDoGasto(DateTimeOffset.UtcNow);
-        
+
+        if (gasto.CategoriaId == Guid.Empty || gasto.CategoriaId == null)
+        {
+            gasto.CategoriaId = null;
+            gasto.Tipo = TipoDoGasto.Entrada;
+        }
+
         _repository.AdicionarGasto(gasto);
 
         var categoria = _repository.ObterCategoriaPorId(request.CategoriaId);
-        
-        if (categoria == null)
-        {
-            return "Categoria informada não existe.";
-        }
-        
+
         try
         {
             _repository.Commit();
             Console.WriteLine("Gasto inserido com sucesso:  " + request);
-            await _mediator.Publish(new GastoCriadoNotification { Nome = categoria.Nome}, cancellationToken);
+            await _mediator.Publish(new GastoCriadoNotification { Nome = gasto.Nome}, cancellationToken);
         }
         catch (Exception ex)
         {

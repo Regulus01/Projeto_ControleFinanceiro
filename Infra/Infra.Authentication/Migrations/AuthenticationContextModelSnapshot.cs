@@ -51,7 +51,7 @@ namespace Infra.Authentication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoriaId")
+                    b.Property<Guid?>("CategoriaId")
                         .HasColumnType("uuid")
                         .HasColumnName("CategoriaId");
 
@@ -199,9 +199,7 @@ namespace Infra.Authentication.Migrations
                 {
                     b.HasOne("Domain.Authentication.Entities.Categoria", "Categoria")
                         .WithMany("Gastos")
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoriaId");
 
                     b.HasOne("Domain.Authentication.Entities.Usuario", "Usuario")
                         .WithMany("Gastos")

@@ -8,9 +8,9 @@ public class RegisterPessoaCommandGerencia : IRequest<PessoaCadastradaEvent>
     public Guid Id { get; set; }
     public string Nome { get; set; }
     public long Telefone { get; set; }
-    public EnderecoCommand Endereco { get; set; }
-    public DateTime DataDeNascimento { get; set; }
-    public SexoCommand Sexo { get; set; }
+    public EnderecoCommand? Endereco { get; set; }
+    public DateTime? DataDeNascimento { get; set; }
+    public SexoCommand? Sexo { get; set; }
 }
 
 public class EnderecoCommand {

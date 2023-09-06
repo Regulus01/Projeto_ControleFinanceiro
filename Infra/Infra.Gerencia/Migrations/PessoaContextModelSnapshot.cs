@@ -64,11 +64,12 @@ namespace Infra.Gerencia.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("DataDeNascimento")
+                    b.Property<DateTime?>("DataDeNascimento")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DataDeNascimento");
 
-                    b.Property<Guid>("EnderecoId")
+                    b.Property<Guid?>("EnderecoId")
+                        .IsRequired()
                         .HasColumnType("uuid")
                         .HasColumnName("id_endereco");
 
@@ -78,11 +79,11 @@ namespace Infra.Gerencia.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("Nome");
 
-                    b.Property<int>("Sexo")
+                    b.Property<int?>("Sexo")
                         .HasColumnType("integer")
                         .HasColumnName("Sexo");
 
-                    b.Property<long>("Telefone")
+                    b.Property<long?>("Telefone")
                         .HasColumnType("bigint")
                         .HasColumnName("Telefone");
 

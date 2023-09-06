@@ -8,9 +8,9 @@ public class Gasto
     public string Nome { get; private set; }
     public DateTimeOffset Data { get; private set; }
     public double Valor { get; private set; }
-    public TipoDoGasto Tipo { get; private set; }
-    public Guid CategoriaId { get; private set; }
-    public virtual Categoria Categoria { get; private set; }
+    public TipoDoGasto Tipo { get; set; }
+    public Guid? CategoriaId { get; set; }
+    public virtual Categoria? Categoria { get; private set; }
     
     public Guid UsuarioId { get; private set; }
     public virtual Usuario Usuario { get; private set; }
