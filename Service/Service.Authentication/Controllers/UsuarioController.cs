@@ -44,4 +44,12 @@ public class UsuarioController : ControllerBase
 
         return Ok(response);
     }
+    
+    [HttpGet("v1/saldo")]
+    public async Task<IActionResult> ObterSaldo()
+    {
+        var response = _appService.ObterSaldo();
+            
+        return Ok(response);
+    }
 }

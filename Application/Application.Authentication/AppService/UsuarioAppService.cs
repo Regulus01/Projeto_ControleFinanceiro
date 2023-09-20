@@ -3,6 +3,7 @@ using Application.Authentication.ViewModels;
 using Application.Authentication.ViewModels.Gastos;
 using AutoMapper;
 using Domain.Authentication.Commands;
+using Domain.Authentication.Entities.Enum;
 using Domain.Authentication.Interface;
 using Infra.CrossCutting.Interface;
 using MediatR;
@@ -30,5 +31,13 @@ public partial class UsuarioAppService : IUsuarioAppService
         var result = await _mediator.Send(command);
         
         return result;
+    }
+
+    public double ObterSaldo()
+    {
+        var entradas = _usuarioRepository.ObterGastos(x => x.Tipo == TipoDoGasto.Entrada && x.UsuarioId == _user.GetUserId()).Sum(x => x.Valor);
+        var saidas = _usuarioRepository.ObterGastos(x => x.Tipo == TipoDoGasto.Saida && x.UsuarioId == _user.GetUserId()).Sum(x => x.Valor);
+
+        return entradas - saidas;
     }
 }

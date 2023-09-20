@@ -11,6 +11,8 @@ public interface IUsuarioAppService
     Task<string> InserirGasto(GastoViewModel gastoViewModel);
     Task<string> RemoverGasto(Guid gastoId);
 
+    double ObterSaldo();
+
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
                                                  TipoDoGasto? tipoDoGasto, bool trintaDias = false, int? pagina = 0);
     List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
