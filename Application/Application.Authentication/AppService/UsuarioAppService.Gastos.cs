@@ -4,6 +4,7 @@ using Application.Authentication.ViewModels.Gastos;
 using Application.Authentication.ViewModels.Gastos.Enum;
 using Domain.Authentication.Commands;
 using Domain.Authentication.Entities;
+using Domain.Authentication.Entities.Enum;
 
 namespace Application.Authentication.AppService;
 
@@ -67,7 +68,7 @@ public partial class UsuarioAppService
     }
     
     public List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
-        bool trintaDias = false, int? pagina = 0)
+        TipoDoGasto? tipoDoGasto = null, bool trintaDias = false, int? pagina = 0)
     {
         Expression<Func<Gasto, bool>> predicate = x => x.UsuarioId.Equals(_user.GetUserId());
 
@@ -77,11 +78,14 @@ public partial class UsuarioAppService
         if (dataFim.HasValue)
             predicate = predicate.And(x => x.Data <= dataFim);
 
+        if (tipoDoGasto != null)
+            predicate = predicate.And(x => x.Tipo == tipoDoGasto);
+
         if (trintaDias)
         {
             dataInicio = DateTimeOffset.UtcNow.AddDays(-30);
             dataFim = DateTimeOffset.UtcNow;
-            var gastoTrintaDias = ObterGastos(dataInicio, dataFim);
+            var gastoTrintaDias = ObterGastos(dataInicio, dataFim, tipoDoGasto);
             return gastoTrintaDias;
         }
 

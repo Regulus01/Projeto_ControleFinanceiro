@@ -1,6 +1,7 @@
 ﻿using Application.Authentication.ViewModels;
 using Application.Authentication.ViewModels.Categoria;
 using Application.Authentication.ViewModels.Gastos;
+using Domain.Authentication.Entities.Enum;
 
 namespace Application.Authentication.Interface;
 
@@ -11,7 +12,7 @@ public interface IUsuarioAppService
     Task<string> RemoverGasto(Guid gastoId);
 
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
-                                                 bool trintaDias = false, int? pagina = 0);
+                                                 TipoDoGasto? tipoDoGasto, bool trintaDias = false, int? pagina = 0);
     List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
     List<CategoriaViewModel> ObterCategorias();
 

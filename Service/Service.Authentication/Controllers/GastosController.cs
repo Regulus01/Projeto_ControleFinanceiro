@@ -1,5 +1,6 @@
 using Application.Authentication.Interface;
 using Application.Authentication.ViewModels.Gastos;
+using Domain.Authentication.Entities.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,9 +54,9 @@ public class GastosController : ControllerBase
     [Route("ObterGastos")]
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim, int? pagina = 0)
+    public async Task<IActionResult> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim, TipoDoGasto? tipo, int? pagina = 0)
     {
-        var response = _appService.ObterGastos(dataInicio, dataFim, pagina:pagina);
+        var response = _appService.ObterGastos(dataInicio, dataFim, tipo, pagina:pagina);
         return Ok(response);
     }
     
@@ -71,7 +72,7 @@ public class GastosController : ControllerBase
     [Authorize]
     public async Task<IActionResult> ObterGastosTrintaDias()
     {
-        var response = _appService.ObterGastos(null, null, true);
+        var response = _appService.ObterGastos(null, null, null, true);
         return Ok(response);
     }
     
