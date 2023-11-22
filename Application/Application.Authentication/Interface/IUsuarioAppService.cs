@@ -16,6 +16,8 @@ public interface IUsuarioAppService
     List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
                                                  TipoDoGasto? tipoDoGasto, bool trintaDias = false, int? pagina = 0);
     List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
+
+    Dictionary<string, double> ObterGastosDoAno(int ano);
     List<CategoriaViewModel> ObterCategorias();
 
 }

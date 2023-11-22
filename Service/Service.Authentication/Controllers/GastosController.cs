@@ -91,4 +91,20 @@ public class GastosController : ControllerBase
         var response = _appService.ObterGastoPorCategoria(CategoriaId);
         return Ok(response);
     }
+    
+    /// <summary>
+    /// EndPoint utilizado para obter gastos do ano
+    /// </summary>
+    /// <remarks>
+    ///     EndPoint authorize utilizado para obter os gastos do ano
+    /// </remarks>
+    /// <returns></returns>
+    [Route("ObterGastosDoAno")]
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> ObterGastosDoAno([FromQuery] int ano)
+    {
+        var response = _appService.ObterGastosDoAno(ano);
+        return Ok(response);
+    }
 }

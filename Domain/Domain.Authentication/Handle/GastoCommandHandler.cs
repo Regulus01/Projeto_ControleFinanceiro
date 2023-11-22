@@ -27,7 +27,7 @@ public class GastoCommandHandler : IRequestHandler<RegisterGastoCommand, string>
         var gasto = _mapper.Map<Gasto>(request);
 
         gasto.InformeUsuarioId(request.UsuarioId);
-        gasto.InformeDataDoGasto(DateTimeOffset.UtcNow);
+        gasto.InformeDataDoGasto(request.DataDoGasto ?? DateTimeOffset.UtcNow);
 
         if (gasto.CategoriaId == Guid.Empty || gasto.CategoriaId == null)
         {

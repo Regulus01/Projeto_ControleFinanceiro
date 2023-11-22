@@ -8,5 +8,6 @@ public class GastoViewModel
     public Guid? CategoriaId { get; set; }
     public double Valor { get;  set; }
     public TipoDoGastoViewModel Tipo { get; set; }
+    public DateTimeOffset? DataDoGasto { get; set;  }
 
 }

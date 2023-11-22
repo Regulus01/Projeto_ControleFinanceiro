@@ -60,13 +60,43 @@ public partial class UsuarioAppService
         }
 
         var result = _usuarioRepository.ObterGastos(x => x.CategoriaId.Equals(categoriaId) && 
-                                                         x.UsuarioId.Equals(_user.GetUserId()));
+                                                              x.UsuarioId.Equals(_user.GetUserId()));
 
         var gastosComCategoria = _mapper.Map<List<GastoComCategoriaViewModel>>(result);
 
         return gastosComCategoria;
     }
-    
+
+    public List<GastoComCategoriaViewModel> ObterGastosDoAno()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dictionary<string, double> ObterGastosDoAno(int ano)
+    {
+     
+        var result = _usuarioRepository.ObterGastos(x => x.Data.Year.Equals(ano) && 
+                                                              x.UsuarioId.Equals(_user.GetUserId()))
+                                                              .OrderByDescending(x => x.Data).ToList();
+
+        var gastosDoAno = new Dictionary<string, double>();
+        
+        foreach (var gasto in result)
+        {
+            var mes = gasto.Data.ToString("MMMM");
+            if (gastosDoAno.ContainsKey(mes))
+            {
+                gastosDoAno[mes] += gasto.Valor;
+            }
+            else
+            {
+                gastosDoAno[mes] = gasto.Valor;
+            }
+        }
+
+        return gastosDoAno;
+    }
+
     public List<GastoComCategoriaViewModel> ObterGastos(DateTimeOffset? dataInicio, DateTimeOffset? dataFim,
         TipoDoGasto? tipoDoGasto = null, bool trintaDias = false, int? pagina = 0)
     {

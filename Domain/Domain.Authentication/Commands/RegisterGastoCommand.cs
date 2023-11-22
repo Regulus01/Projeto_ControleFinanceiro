@@ -10,6 +10,7 @@ public class RegisterGastoCommand : IRequest<string>
     public TipoDoGastoCommand Tipo { get; set; }
     public double Valor { get;  set; }
     public Guid UsuarioId { get; set; }
+    public DateTimeOffset? DataDoGasto { get; set;  }
 }
 
 public enum TipoDoGastoCommand
