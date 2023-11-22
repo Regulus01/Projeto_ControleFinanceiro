@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq.Expressions;
 using Application.Authentication.Extensions;
 using Application.Authentication.ViewModels.Gastos;
@@ -77,9 +78,16 @@ public partial class UsuarioAppService
      
         var result = _usuarioRepository.ObterGastos(x => x.Data.Year.Equals(ano) && 
                                                               x.UsuarioId.Equals(_user.GetUserId()))
-                                                              .OrderByDescending(x => x.Data).ToList();
+                                                              .OrderBy(x => x.Data).ToList();
 
         var gastosDoAno = new Dictionary<string, double>();
+        
+        // Inicializar o dicionário com todos os meses do ano
+        for (int i = 1; i <= 12; i++)
+        {
+            var nomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+            gastosDoAno[nomeMes] = 0.0;
+        }
         
         foreach (var gasto in result)
         {
