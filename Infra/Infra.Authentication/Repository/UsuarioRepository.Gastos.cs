@@ -6,25 +6,43 @@ using Microsoft.EntityFrameworkCore;
 namespace Infra.Authentication.Repository;
 
 public partial class UsuarioRepository
-{
-    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0)
+{   
+    private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1); // Semáforo estático
+
+    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0) 
+    {
+        return ObterGastosAsync(predicate, pagina).Result;
+    }
+
+    public async Task<List<Gasto>> ObterGastosAsync(Expression<Func<Gasto, bool>> predicate, int? pagina = 0)
     {
         int TamanhoPagina = 5;
 
-        var gastos = _context
-            .Gastos.Where(predicate)
-            .Include(x => x.Categoria);
+        await semaphore.WaitAsync(); // Aguarde a permissão do semáforo
 
-        if (pagina > 0)
+        try
         {
-            var teste =  gastos.OrderByDescending(x => x.Data).Skip(TamanhoPagina * (pagina.Value - 1))
-                         .Take(TamanhoPagina)
-                         .ToList();
+            var gastos = _context
+                .Gastos
+                .Where(predicate)
+                .Include(x => x.Categoria)
+                .AsNoTracking(); // Desabilita o rastreamento de entidades para leituras
 
-            return teste;
+            if (pagina > 0)
+            {
+                var resultadoPaginado = await gastos.OrderByDescending(x => x.Data)
+                    .Skip(TamanhoPagina * (pagina.Value - 1))
+                    .Take(TamanhoPagina)
+                    .ToListAsync();
+
+                return resultadoPaginado;
+            }
+
+            return await gastos.ToListAsync();
         }
-
-
-        return gastos.ToList();
+        finally
+        {
+            semaphore.Release(); // Libera o semáforo para permitir que outras operações acessem o contexto
+        }
     }
 }
