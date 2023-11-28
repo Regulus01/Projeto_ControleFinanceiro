@@ -68,16 +68,11 @@ public partial class UsuarioAppService
         return gastosComCategoria;
     }
 
-    public List<GastoComCategoriaViewModel> ObterGastosDoAno()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Dictionary<string, double> ObterGastosDoAno(int ano)
+    public Dictionary<string, double> ObterGastosDoAno(int ano, TipoDoGasto tipo = TipoDoGasto.Entrada)
     {
      
         var result = _usuarioRepository.ObterGastos(x => x.Data.Year.Equals(ano) && 
-                                                              x.UsuarioId.Equals(_user.GetUserId()))
+                                                              x.UsuarioId.Equals(_user.GetUserId()) && x.Tipo == tipo)
                                                               .OrderBy(x => x.Data).ToList();
 
         var gastosDoAno = new Dictionary<string, double>();

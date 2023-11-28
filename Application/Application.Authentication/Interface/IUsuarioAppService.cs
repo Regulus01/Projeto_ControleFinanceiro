@@ -17,7 +17,7 @@ public interface IUsuarioAppService
                                                  TipoDoGasto? tipoDoGasto, bool trintaDias = false, int? pagina = 0);
     List<GastoComCategoriaViewModel> ObterGastoPorCategoria(Guid categoriaId);
 
-    Dictionary<string, double> ObterGastosDoAno(int ano);
+    Dictionary<string, double> ObterGastosDoAno(int ano, TipoDoGasto tipo = TipoDoGasto.Entrada);
     List<CategoriaViewModel> ObterCategorias();
 
 }

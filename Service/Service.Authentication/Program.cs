@@ -44,7 +44,16 @@ builder.Services.AddSwaggerGen(c =>
     }); 
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(b =>
+    {
+        b.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 //Servicos
 UsuarioDependencyInjection.Register(builder.Services);
 
@@ -71,10 +80,7 @@ else
 }
 
 
-app.UseCors(x => x
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+app.UseCors();
 
 app.UseHttpsRedirection();
 

@@ -93,16 +93,16 @@ public class GastosController : ControllerBase
     }
     
     /// <summary>
-    /// EndPoint utilizado para obter gastos do ano
+    /// EndPoint utilizado para obter gastos do ano, com filtro de tipo do gasto.
     /// </summary>
     /// <remarks>
-    ///     EndPoint authorize utilizado para obter os gastos do ano
+    ///     EndPoint authorize utilizado para obter os gastos do ano, TipoGasto 1 = entrada TipoDoGasto 2 = saida
     /// </remarks>
     /// <returns></returns>
     [Route("ObterGastosDoAno")]
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> ObterGastosDoAno([FromQuery] int ano)
+    public async Task<IActionResult> ObterGastosDoAno([FromQuery] int ano, TipoDoGasto tipo = TipoDoGasto.Entrada)
     {
         var response = _appService.ObterGastosDoAno(ano);
         return Ok(response);
