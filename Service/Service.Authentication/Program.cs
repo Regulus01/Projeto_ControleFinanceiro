@@ -44,6 +44,7 @@ builder.Services.AddSwaggerGen(c =>
     }); 
 });
 
+builder.Services.AddCors();
 //Servicos
 UsuarioDependencyInjection.Register(builder.Services);
 
