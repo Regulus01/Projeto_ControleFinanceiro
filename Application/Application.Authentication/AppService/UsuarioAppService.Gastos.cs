@@ -88,7 +88,7 @@ public partial class UsuarioAppService
         
         foreach (var gasto in result)
         {
-            var mes = gasto.Data.ToString("MMMM");
+            var mes = gasto.Data.ToString("MMMM", cultura);
             if (gastosDoAno.ContainsKey(mes))
             {
                 gastosDoAno[mes] += gasto.Valor;
