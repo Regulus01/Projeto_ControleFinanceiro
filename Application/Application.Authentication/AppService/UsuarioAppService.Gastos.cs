@@ -77,10 +77,12 @@ public partial class UsuarioAppService
 
         var gastosDoAno = new Dictionary<string, double>();
         
+        var cultura = new CultureInfo("pt-BR");
+        
         // Inicializar o dicionário com todos os meses do ano
         for (int i = 1; i <= 12; i++)
         {
-            var nomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+            var nomeMes = cultura.DateTimeFormat.GetMonthName(i);
             gastosDoAno[nomeMes] = 0.0;
         }
         

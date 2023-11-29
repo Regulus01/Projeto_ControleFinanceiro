@@ -104,7 +104,7 @@ public class GastosController : ControllerBase
     [Authorize]
     public async Task<IActionResult> ObterGastosDoAno([FromQuery] int ano, TipoDoGasto tipo = TipoDoGasto.Entrada)
     {
-        var response = _appService.ObterGastosDoAno(ano);
+        var response = _appService.ObterGastosDoAno(ano, tipo);
         return Ok(response);
     }
 }
