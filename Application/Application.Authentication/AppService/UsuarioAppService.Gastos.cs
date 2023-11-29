@@ -129,4 +129,34 @@ public partial class UsuarioAppService
 
         return gastoComCategoriaViewModel;
     }
+    
+    public Dictionary<string, double> ObterGastosTrintaDias()
+    {
+        Expression<Func<Gasto, bool>> predicate = x => x.UsuarioId.Equals(_user.GetUserId());
+        
+        var dataInicio = DateTimeOffset.UtcNow.AddDays(-30);
+        var dataFim = DateTimeOffset.UtcNow;
+        
+        predicate = predicate.And(x => x.Data >= dataInicio);
+        predicate = predicate.And(x => x.Data <= dataFim);
+        predicate = predicate.And(x => x.Tipo == TipoDoGasto.Saida);
+        predicate = predicate.And(x => x.Categoria != null);
+        
+        var gastoComCategoriaViewModel = _mapper.Map<List<GastoComCategoriaViewModel>>(_usuarioRepository
+            .ObterGastos(predicate));
+
+        var gastosTrintaDias = new Dictionary<string, double>();
+        
+        // Inicializar o dicionário com as categorias
+        foreach (var gasto in gastoComCategoriaViewModel)
+            gastosTrintaDias[gasto.NomeCategoria] = 0.0;
+        
+        foreach (var gasto in gastoComCategoriaViewModel)
+        {
+            if (gastosTrintaDias.ContainsKey(gasto.NomeCategoria))
+                gastosTrintaDias[gasto.NomeCategoria] += gasto.Valor;
+        }
+        
+        return gastosTrintaDias;
+    }
 }

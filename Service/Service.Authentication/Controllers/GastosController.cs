@@ -72,7 +72,7 @@ public class GastosController : ControllerBase
     [Authorize]
     public async Task<IActionResult> ObterGastosTrintaDias()
     {
-        var response = _appService.ObterGastos(null, null, null, true);
+        var response = _appService.ObterGastosTrintaDias();
         return Ok(response);
     }
     

@@ -20,4 +20,6 @@ public interface IUsuarioAppService
     Dictionary<string, double> ObterGastosDoAno(int ano, TipoDoGasto tipo = TipoDoGasto.Entrada);
     List<CategoriaViewModel> ObterCategorias();
 
+    Dictionary<string, double> ObterGastosTrintaDias();
+
 }
