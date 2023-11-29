@@ -9,6 +9,7 @@ namespace Infra.Authentication.Repository;
 public partial class UsuarioRepository : IUsuarioRepository
 {
     private readonly AuthenticationContext _context;
+    private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1); // Semáforo estático
 
     public UsuarioRepository(AuthenticationContext context)
     {
@@ -24,11 +25,26 @@ public partial class UsuarioRepository : IUsuarioRepository
 
     public List<Categoria> ObterCategoriasDoUsuario(Guid usuarioId)
     {
-        var categorias = _context.Categorias
-            .Where(x => x.UsuarioId == usuarioId)
-            .OrderBy(x => x.Nome);
-        
-        return new List<Categoria>(categorias);
+        return ObterCategoriasDoUsuarioAsync(usuarioId).Result;
+    }
+
+    public async Task<List<Categoria>> ObterCategoriasDoUsuarioAsync(Guid usuarioId)
+    {
+        await semaphore.WaitAsync();
+
+        try
+        {
+            var categorias = _context.Categorias
+                .Where(x => x.UsuarioId == usuarioId)
+                .OrderBy(x => x.Nome)
+                .ToList();
+
+            return new List<Categoria>(categorias);
+        }
+        finally
+        {
+            semaphore.Release();
+        }
     }
 
     public Usuario? ObterUsuarioPorId(Guid id)

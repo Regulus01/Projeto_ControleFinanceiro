@@ -7,8 +7,6 @@ namespace Infra.Authentication.Repository;
 
 public partial class UsuarioRepository
 {   
-    private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1); // Semáforo estático
-
     public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0) 
     {
         return ObterGastosAsync(predicate, pagina).Result;
