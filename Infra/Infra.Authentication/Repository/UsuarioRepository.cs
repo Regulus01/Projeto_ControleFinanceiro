@@ -25,28 +25,11 @@ public partial class UsuarioRepository : IUsuarioRepository
 
     public List<Categoria> ObterCategoriasDoUsuario(Guid usuarioId)
     {
-        return ObterCategoriasDoUsuarioAsync(usuarioId).Result;
+        var query = QuerySemaphore<Categoria>(x => x.UsuarioId == usuarioId).Result
+                                                                            .OrderBy(x => x.Nome);
+        return query.ToList();
     }
-
-    public async Task<List<Categoria>> ObterCategoriasDoUsuarioAsync(Guid usuarioId)
-    {
-        await semaphore.WaitAsync();
-
-        try
-        {
-            var categorias = _context.Categorias
-                .Where(x => x.UsuarioId == usuarioId)
-                .OrderBy(x => x.Nome)
-                .ToList();
-
-            return new List<Categoria>(categorias);
-        }
-        finally
-        {
-            semaphore.Release();
-        }
-    }
-
+    
     public Usuario? ObterUsuarioPorId(Guid id)
     {
         var user = _context.Users
@@ -79,5 +62,28 @@ public partial class UsuarioRepository : IUsuarioRepository
     public void Commit()
     {
         _context.SaveChanges();
+    }
+    
+    public async Task<IQueryable<T>> QuerySemaphore<T>(Expression<Func<T, bool>> predicate, 
+        bool noTracking = false, params Expression<Func<T, object>>[] includes) where T : class
+    {
+        await semaphore.WaitAsync();
+
+        try
+        {
+            var query = _context.Set<T>()
+                .Where(predicate)
+                .IncludeMultiple(includes);
+
+            if (noTracking)
+                query = query.AsNoTracking();
+
+            return query;
+            
+        }
+        finally
+        {
+            semaphore.Release();
+        }
     }
 }

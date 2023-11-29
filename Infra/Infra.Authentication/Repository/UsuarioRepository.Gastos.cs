@@ -7,40 +7,19 @@ namespace Infra.Authentication.Repository;
 
 public partial class UsuarioRepository
 {   
-    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0) 
+    public List<Gasto> ObterGastos(Expression<Func<Gasto, bool>> predicate, int? pagina = 0)
     {
-        return ObterGastosAsync(predicate, pagina).Result;
-    }
+        var query = QuerySemaphore(predicate, true, x => x.Categoria).Result;
 
-    public async Task<List<Gasto>> ObterGastosAsync(Expression<Func<Gasto, bool>> predicate, int? pagina = 0)
-    {
-        int TamanhoPagina = 5;
+        if (!(pagina > 0))
+            return query.ToList();
+        
+        var tamanhoPagina = 5;
+        var resultadoPaginado = query.OrderByDescending(x => x.Data)
+            .Skip(tamanhoPagina * (pagina.Value - 1))
+            .Take(tamanhoPagina);
 
-        await semaphore.WaitAsync(); // Aguarde a permissão do semáforo
+        return resultadoPaginado.ToList();
 
-        try
-        {
-            var gastos = _context
-                .Gastos
-                .Where(predicate)
-                .Include(x => x.Categoria)
-                .AsNoTracking(); // Desabilita o rastreamento de entidades para leituras
-
-            if (pagina > 0)
-            {
-                var resultadoPaginado = await gastos.OrderByDescending(x => x.Data)
-                    .Skip(TamanhoPagina * (pagina.Value - 1))
-                    .Take(TamanhoPagina)
-                    .ToListAsync();
-
-                return resultadoPaginado;
-            }
-
-            return await gastos.ToListAsync();
-        }
-        finally
-        {
-            semaphore.Release(); // Libera o semáforo para permitir que outras operações acessem o contexto
-        }
     }
 }
