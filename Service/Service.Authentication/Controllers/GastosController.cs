@@ -68,7 +68,7 @@ public class GastosController : ControllerBase
     /// </remarks>
     /// <returns></returns>
     [Route("ObterGastosTrintaDias")]
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> ObterGastosTrintaDias()
     {
